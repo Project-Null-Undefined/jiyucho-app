@@ -1,0 +1,14 @@
+@use "scss-reset/reset";
+
+:root {
+  font-size: 16px;
+}
+
+* {
+  margin: unset;
+  padding: unset;
+  box-sizing: border-box;
+  font-size: 1rem;
+  user-select: none;
+  -webkit-user-select: none;
+}
