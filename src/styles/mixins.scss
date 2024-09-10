@@ -1,0 +1,13 @@
+@use "sass:meta";
+
+@mixin hoveredColor($color, $transition-time, $apply-to: color) {
+  transition: #{$apply-to} $transition-time;
+
+  &:hover {
+    @if $apply-to == color {
+      color: color-mix(in srgb, $color, #000 30%);
+    } @else if $apply-to == background {
+      background-color: color-mix(in srgb, $color, #000 30%);
+    }
+  }
+}
