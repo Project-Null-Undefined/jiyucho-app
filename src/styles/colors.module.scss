@@ -1,3 +1,13 @@
 :export {
   primaryColor: $primary-color;
+  primaryLightColor: $primary-light-color;
+  textColor: $text-color;
+  errorColor: $error-color;
+  backgroundColor: $background-color;
+
+  onPrimaryColor: $on-primary-color;
+  onPrimaryLightColor: $on-primary-light-color;
+  onTextColor: $on-text-color;
+  onErrorColor: $on-error-color;
+  onBackgroundColor: $on-background-color;
 }
