@@ -53,3 +53,9 @@ export const BASE_SCALES = [
 ] as const satisfies BaseScale[];
 
 export const SCALES = BASE_SCALES.map((scale) => scale.scale);
+
+export enum Range {
+  MIN,
+  MAX,
+}
+export const { MIN, MAX } = Range;

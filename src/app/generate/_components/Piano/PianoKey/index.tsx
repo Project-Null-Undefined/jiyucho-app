@@ -31,7 +31,11 @@ interface PianoKeyCProps {
   octave: number;
 }
 function PianoKeyC({ octave }: PianoKeyCProps) {
-  return <div className={styles.key_c}>C{octave}</div>;
+  return (
+    <div className={styles.key_c}>
+      <span>C{octave}</span>
+    </div>
+  );
 }
 
 function PianoKeyD() {

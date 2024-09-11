@@ -1,0 +1,37 @@
+.block {
+  --bar-colmn-start: calc(var(--cols-per-bar) * var(--bar-index));
+
+  grid-column-start: calc(var(--bar-colmn-start) + var(--col-start));
+  grid-column-end: calc(var(--bar-colmn-start) + var(--col-end));
+
+  grid-row-start: var(--row-start);
+  grid-row-end: var(--row-start) + 1;
+
+  padding-left: 5px;
+  height: 100%;
+  line-height: 100%;
+  background-color: $primary-light-color;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  &::before,
+  &::after {
+    content: "";
+    height: 100%;
+    position: absolute;
+  }
+
+  &::before {
+    width: 3px;
+    background-color: $primary-color;
+    left: 0;
+  }
+
+  &::after {
+    width: 1px;
+    background-color: $on-primary-color;
+    right: 0;
+  }
+}

@@ -18,9 +18,13 @@ $key-height: 25px;
   width: 100%;
   height: $key-height * 1.5;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: end;
+}
+
+.key_d,
+.key_g,
+.key_a {
+  // 黒鍵の間の白鍵
+  height: $key-height * 2;
 }
 
 .key_c,
@@ -40,5 +44,15 @@ $key-height: 25px;
     position: absolute;
     top: -$key-height / 2;
     left: 0;
+  }
+}
+
+.key_c {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+
+  span {
+    line-height: $key-height;
   }
 }
