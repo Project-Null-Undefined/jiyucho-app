@@ -56,29 +56,50 @@ const music = new Music({
 });
 
 export default function Blocks() {
-  const octaveRange = useAtomValue(octaveRangeAtom);
-  const barCount = useAtomValue(barCountAtom);
-  const beatCount = useAtomValue(beatCountAtom);
-  const minNoteDuration = useAtomValue(minNoteDurationAtom);
+  const octaveRange = useAtomValue(octaveRangeAtom); // 表示する音域
+  const barCount = useAtomValue(barCountAtom); // 小節数
+  const beatCount = useAtomValue(beatCountAtom); // 拍子
+  const minNoteDuration = useAtomValue(minNoteDurationAtom); // 最小音符の長さ
+
+  const cols = barCount * beatCount * minNoteDuration;
+  const rows = (octaveRange[MAX] - octaveRange[MIN] + 1) * 12;
 
   const style = useMemo(
     () =>
       ({
-        ["--w" as string]: barCount * beatCount * 100,
         // 1小節あたりのカラム数
         ["--cols-per-bar" as string]: beatCount * minNoteDuration,
-        ["--cols" as string]: barCount * beatCount * minNoteDuration,
-        ["--rows" as string]: (octaveRange[MAX] - octaveRange[MIN] + 1) * 12,
+        ["--cols" as string]: cols,
+        ["--rows" as string]: rows,
       }) satisfies CSSProperties,
-    [octaveRange, barCount, beatCount, minNoteDuration],
+    [beatCount, minNoteDuration, cols, rows],
   );
 
   return (
     <section className={styles.blocks}>
       <div className={styles.innner} style={style}>
+        <div className={styles.beat_line_container}>
+          {Array.from({ length: barCount * beatCount + 1 }).map((_, i) => (
+            // 区切り線(縦線)
+            <div
+              key={i}
+              style={{ ["--c" as string]: minNoteDuration * i + 1 }}
+            />
+          ))}
+        </div>
+
+        <div className={styles.key_line_container}>
+          {Array.from({ length: rows }).map((_, i) => (
+            // 区切り線(縦線)
+            <div key={i} style={{ ["--r" as string]: i + 1 }} />
+          ))}
+        </div>
+
         {music.bars.map((bar, i) => (
+          // 1小節
           <div key={bar.id} className={styles.bar_container}>
             {bar.notes.map((note) => (
+              // 1音
               <Block
                 key={note.id}
                 note={note}
