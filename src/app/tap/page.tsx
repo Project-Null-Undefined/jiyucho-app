@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ProgressBar from './ProgressBar';
-
+import RhythmBar from "@/app/tap/components/RhythmBar";
+import styles from "./style.module.scss";
 export default function MainPage() {
   // useStateフックを使って状態変数 `push_space_key` と、それを更新する関数 `setPushSpaceKey` を定義
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
@@ -35,9 +35,8 @@ export default function MainPage() {
 
   return (
     <>
-      <div>
-        <h1>SPACEキー押した区間だけ色が変わる棒</h1>
-        <ProgressBar duration={10} highlight={pushSpaceKey}/> {/* 10秒で満タン */}
+      <div className={styles.rhythmBar}>
+        <RhythmBar duration={10} highlight={pushSpaceKey} barWidth={70} />
       </div>
     </>
   );

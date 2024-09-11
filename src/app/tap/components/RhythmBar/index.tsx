@@ -1,14 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import styles from "@/styles/colors.module.scss";
+import styles from "./style.module.scss";
+import colors from "@/styles/colors.module.scss";
 
 type ProgressBarProps = {
   duration: number; // バーが満タンになるまでの時間（秒）
   highlight?: boolean; // true の場合にバーの色を変える
+  barWidth:number;
 };
 
-export default function ProgressBar({ duration, highlight = false }: ProgressBarProps) {
+export default function ProgressBar({ duration, highlight = false ,barWidth}: ProgressBarProps) {
   const [progress, setProgress] = useState(0);
   const [highlightedSections, setHighlightedSections] = useState<{ start: number, end: number }[]>([]);
   const [currentHighlightStart, setCurrentHighlightStart] = useState<number | null>(null);
@@ -16,7 +18,7 @@ export default function ProgressBar({ duration, highlight = false }: ProgressBar
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
-        const increment = 100 / (duration*100);
+        const increment = 100 / (duration * 100);
         const newProgress = parseFloat((prev + increment).toFixed(2));
         if (newProgress >= 100) {
           clearInterval(interval);
@@ -50,89 +52,59 @@ export default function ProgressBar({ duration, highlight = false }: ProgressBar
     return highlightedSections.map((section, index) => (
       <div
         key={index}
+        className={styles.highlightedSection}
         style={{
-          ...styless.highlightedSection,
           left: `${section.start}%`,
           width: `${section.end - section.start}%`,
+          backgroundColor: colors.primaryColor, // ハイライト色の適用
         }}
       />
     ));
   };
 
   return (
-    <div style={styless.container}>
-      <div style={styless.progressContainer}>
+    <div 
+	  className={styles.container}
+	  style={{
+		width: `${barWidth}%`
+	  }}
+	>
+      <div className={styles.progressContainer}>
         {/* 進捗バー */}
         <div
+          className={styles.progressBar}
           style={{
-            ...styless.progressBar,
             width: '100%',
             backgroundColor: '#eee', // 背景色（進捗バーのベース）
-            position: 'relative' as 'relative',
+            position: 'relative',
           }}
         >
           {/* 現在の進捗バー */}
           <div
+            className={styles.progressBar}
             style={{
-              ...styless.progressBar,
               width: `${progress}%`,
-              position: 'absolute' as 'absolute',
+              position: 'absolute',
               top: 0,
               left: 0,
+              backgroundColor: colors.primaryLightColor, // 進捗バーの色
             }}
           />
 
           {/* ハイライト区間の表示 */}
           {highlight && currentHighlightStart !== null && (
             <div
+              className={styles.highlightedSection}
               style={{
-                ...styless.highlightedSection,
                 left: `${currentHighlightStart}%`,
                 width: `${progress - currentHighlightStart}%`,
+                backgroundColor: colors.primaryColor, // ハイライト色の適用
               }}
             />
           )}
           {renderHighlightedSections()}
         </div>
       </div>
-      <div>
-        {/* ハイライト区間のデバッグ表示 */}
-        {highlightedSections.map((section, index) => (
-          <div key={index}>
-            {`Start: ${section.start.toFixed(2)}%, End: ${section.end.toFixed(2)}%`}
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
-
-const styless = {
-  container: {
-    width: '100%',
-    backgroundColor: '#eee',
-    borderRadius: '4px',
-    overflow: 'hidden',
-  },
-  progressContainer: {
-    width: '100%',
-    height: '20px',
-    display: 'flex',
-    position: 'relative' as 'relative',
-  },
-  progressBar: {
-    height: '100%',
-    transition: 'width 0.1s ease-in-out',
-	backgroundColor:styles.primaryLightColor,
-    position: 'absolute' as 'absolute', // 進捗バーとハイライト区間の重ね表示のため
-    top: 0,
-    left: 0,
-  },
-  highlightedSection: {
-    height: '100%',
-    backgroundColor: styles.primaryColor, // ハイライト色（青）の透明度を調整
-    position: 'absolute' as 'absolute',
-    zIndex: 1,
-  } as React.CSSProperties,
-};
-
