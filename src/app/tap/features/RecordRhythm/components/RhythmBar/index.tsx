@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import styles from "./style.module.scss";
 import colors from "@/styles/colors.module.scss";
 import { useRhythmBar } from "../../hooks/useRhythmBar";

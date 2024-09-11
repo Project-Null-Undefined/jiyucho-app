@@ -71,5 +71,5 @@ export function useRhythmBar(duration: number) {
     }
   }, [progress, pushSpaceKey]);
 
-  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart };
+  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart,isStarted };
 }
