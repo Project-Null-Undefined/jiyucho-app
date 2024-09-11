@@ -43,13 +43,23 @@ export interface Bar {
   chord: DiatonicChord;
 }
 
-// 楽譜
-export interface Music {
-  bars: Bar[];
+// 設定
+export interface Settings {
   // テンポ ex: 120
   bpm: number;
-  // 拍子 ex: 4
-  timeSignature: number;
+  // 表示する音階の範囲
+  octaveRange: [number, number];
+  // 小節数
+  barCount: number;
+  // 1小節あたりの拍数
+  beatCount: number;
+  // 最小の音符の長さ (1/N 拍)
+  minNoteDuration: number;
+}
+
+// 楽譜
+export interface Music extends Settings {
+  bars: Bar[];
 }
 
 // 音程 (1音目を0として 全音:2, 半音:1 で表現)
