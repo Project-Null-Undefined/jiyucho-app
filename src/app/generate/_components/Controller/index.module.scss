@@ -1,2 +1,11 @@
 .controller {
+  display: flex;
+  gap: 70px;
+  align-items: center;
+  justify-content: center;
+
+  .group {
+    display: flex;
+    gap: 20px;
+  }
 }
