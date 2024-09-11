@@ -1,0 +1,44 @@
+$key-height: 25px;
+
+.key_c,
+.key_e,
+.key_g {
+  border-top: solid $on-background-color 1px;
+}
+
+.key_c,
+.key_d,
+.key_e,
+.key_f,
+.key_g,
+.key_a,
+.key_b {
+  // 白键
+  padding-right: 5px;
+  width: 100%;
+  height: $key-height * 1.5;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.key_c,
+.key_d,
+.key_f,
+.key_g,
+.key_a {
+  &::after {
+    // 黒键
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: $key-height;
+    border-right: solid $on-background-color 1px;
+    border-block: solid $on-background-color 1px;
+    background-color: $background-color;
+    position: absolute;
+    top: -$key-height / 2;
+    left: 0;
+  }
+}
