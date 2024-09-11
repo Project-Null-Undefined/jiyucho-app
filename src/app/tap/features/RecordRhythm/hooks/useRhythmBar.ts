@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 
-export function useRhythmBar(duration:number) {
+export function useRhythmBar(duration: number) {
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
   const [progress, setProgress] = useState(0);
   const [highlightedSections, setHighlightedSections] = useState<{ start: number, end: number }[]>([]);
   const [currentHighlightStart, setCurrentHighlightStart] = useState<number | null>(null);
-
+  const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
 
   const handleKeyDownSpace = (event: KeyboardEvent) => {
     if (event.code === "Space") {
       setPushSpaceKey(true);
-      console.log("Space");
+      console.log("Space pressed");
+
+      if (!isStarted) {  // まだ開始していない場合は進行状況を開始
+        setIsStarted(true);
+      }
     }
   };
 
@@ -34,9 +38,11 @@ export function useRhythmBar(duration:number) {
   }, []);
 
   useEffect(() => {
+    if (!isStarted) return; // 進行状況が始まっていない場合は何もしない
+
     const interval = setInterval(() => {
       setProgress((prev) => {
-        const increment = 100 / (duration * 100);
+        const increment = 100 / (duration * 10);
         const newProgress = parseFloat((prev + increment).toFixed(2));
         if (newProgress >= 100) {
           clearInterval(interval);
@@ -47,7 +53,7 @@ export function useRhythmBar(duration:number) {
     }, 50);
 
     return () => clearInterval(interval);
-  }, [duration]);
+  }, [isStarted, duration]);
 
   useEffect(() => {
     if (pushSpaceKey) {
@@ -65,7 +71,5 @@ export function useRhythmBar(duration:number) {
     }
   }, [progress, pushSpaceKey]);
 
-
-
-  return { pushSpaceKey,progress,highlightedSections,currentHighlightStart};
+  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart };
 }

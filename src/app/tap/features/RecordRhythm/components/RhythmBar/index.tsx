@@ -7,7 +7,6 @@ import { useRhythmBar } from "../../hooks/useRhythmBar";
 
 type ProgressBarProps = {
   duration: number; // バーが満タンになるまでの時間（秒）
-  highlight?: boolean; // true の場合にバーの色を変える
   barWidth:number;
 };
 
@@ -41,7 +40,7 @@ export default function ProgressBar({ duration,barWidth}: ProgressBarProps) {
           className={styles.progressBar}
           style={{
             width: '100%',
-            backgroundColor: '#eee', // 背景色（進捗バーのベース）
+            backgroundColor: '#eee', // 背景色（バーのベース）
             position: 'relative',
           }}
         >
@@ -53,7 +52,7 @@ export default function ProgressBar({ duration,barWidth}: ProgressBarProps) {
               position: 'absolute',
               top: 0,
               left: 0,
-              backgroundColor: colors.primaryLightColor, // 進捗バーの色
+              backgroundColor: colors.primaryLightColor, // バーの色
             }}
           />
 
