@@ -1,4 +1,5 @@
 import { BASE_SCALES } from "@/const";
+import { Beat, Note } from "@/models";
 
 export interface BaseScale {
   scale: string;
@@ -7,41 +8,11 @@ export interface BaseScale {
 }
 export type Scale = (typeof BASE_SCALES)[number]["scale"];
 
-// 1拍
-export type Beat = {
-  // 開始位置 ex: 1/4拍=1
-  start: number;
-  // 音の長さ ex: 1/4拍=1
-  duration: number;
-};
-
-// 1音
-export interface Note extends Beat {
-  // 音階 ex: C, C#
-  scale: Scale;
-  // オクターブ ex: 1
-  octave: number;
-}
-
 // コードの種類
 export type DiatonicChordType = "major" | "minor" | "diminished" | "augmented";
 
-// コード
-export interface DiatonicChord {
-  // 音階
-  note: Note;
-  // コードの種類を返す ex: minor
-  getType: () => DiatonicChordType;
-}
-
 // メロディー (length = 4拍 * 8小節)
 export type Melody = Note[];
-
-// 1小節
-export interface Bar {
-  notes: Note[]; // length = 4拍
-  chord: DiatonicChord;
-}
 
 // 設定
 export interface Settings {
@@ -55,11 +26,6 @@ export interface Settings {
   beatCount: number;
   // 最小の音符の長さ (1/N 拍)
   minNoteDuration: number;
-}
-
-// 楽譜
-export interface Music extends Settings {
-  bars: Bar[];
 }
 
 // 音程 (1音目を0として 全音:2, 半音:1 で表現)
