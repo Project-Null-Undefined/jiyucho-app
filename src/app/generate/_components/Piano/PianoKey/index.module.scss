@@ -40,7 +40,11 @@ $key-height: 25px;
     height: $key-height;
     border-right: solid $on-background-color 1px;
     border-block: solid $on-background-color 1px;
-    background-color: $background-color;
+    background-color: color-mix(
+      in srgb,
+      $on-background-color,
+      $background-color 90%
+    );
     position: absolute;
     top: -$key-height / 2;
     left: 0;
