@@ -7,8 +7,10 @@ import styles from "./page.module.scss";
 export default function Page() {
   return (
     <main className={styles.main}>
-      <Piano />
-      <Blocks />
+      <div className={styles.piano_area}>
+        <Piano />
+        <Blocks />
+      </div>
       <CodeSelector />
       <Controller />
     </main>
