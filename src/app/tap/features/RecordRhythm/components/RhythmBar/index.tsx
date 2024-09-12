@@ -6,12 +6,14 @@ import { useRhythmBar } from "../../hooks/useRhythmBar";
 import HighlightedSections from "../HighlightedSections";
 
 type ProgressBarProps = {
-  duration: number; // バーが満タンになるまでの時間（秒）
   barWidth:number;
+  pushSpaceKey:boolean;
+  progress:number;
+  currentHighlightStart:number|null;
+
 };
 
-export default function ProgressBar({ duration,barWidth}: ProgressBarProps) {
-  const { pushSpaceKey,progress,highlightedSections,currentHighlightStart} = useRhythmBar(duration)
+export default function ProgressBar({ barWidth ,pushSpaceKey,progress,currentHighlightStart}: ProgressBarProps) {
   return (
     <div 
     className={styles.container}
@@ -52,7 +54,7 @@ export default function ProgressBar({ duration,barWidth}: ProgressBarProps) {
               }}
             />
           )}
-          <HighlightedSections highlightedSections={highlightedSections}/>
+          {/* <HighlightedSections highlightedSections={highlightedSections}/> */}
         </div>
       </div>
     </div>
