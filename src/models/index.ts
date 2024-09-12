@@ -1,5 +1,5 @@
 import { MAX, MIN, SCALES } from "@/const";
-import { DiatonicChordType, Scale, Settings } from "@/tyeps";
+import { DiatonicChordType, Scale, Settings } from "@/types";
 import { CSSProperties } from "react";
 
 // IDを持つ基底クラス

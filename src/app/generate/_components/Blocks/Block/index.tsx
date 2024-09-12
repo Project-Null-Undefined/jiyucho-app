@@ -1,4 +1,4 @@
-import { Settings } from "@/tyeps";
+import { Settings } from "@/types";
 import styles from "./index.module.scss";
 import { Note } from "@/models";
 

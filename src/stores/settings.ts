@@ -1,4 +1,4 @@
-import { Settings } from "@/tyeps";
+import { Settings } from "@/types";
 import { atom } from "jotai";
 
 // デフォルトの設定(Readonly)
