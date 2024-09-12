@@ -5,17 +5,17 @@ type RhythmTextProps = {
   text: string;
   fontsize: string;
 };
-export default function RhythmText({ text,fontsize }: RhythmTextProps) {
+export default function RhythmText({ text, fontsize }: RhythmTextProps) {
   return (
     <>
-      <div 
-	  className={styles.container}
-	  style={{
-		fontSize:fontsize
-	  }}
-	  >
+      <div
+        className={styles.container}
+        style={{
+          fontSize: fontsize,
+        }}
+      >
         <text>{text}</text>
-        <SpaceKeyIcon fontsize={fontsize}/>
+        <SpaceKeyIcon fontsize={fontsize} />
       </div>
     </>
   );

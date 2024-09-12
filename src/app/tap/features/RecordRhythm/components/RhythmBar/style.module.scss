@@ -1,33 +1,29 @@
 .container {
-	border-radius: 4px;
-	// overflow: hidden;
-	width: 100%;
+  width: 100%;
 }
-  
+
 .progressContainer {
-	width: 100%;
-	background-color: #eee;
-	height: 10px;
-	display: flex;
-	// position: relative;
-	border-radius: 6px;
+  width: 100%;
+  background-color: $bar-background-color;
+  height: 10px;
+  display: flex;
+  border-radius: $radius-lg;
 
-	.progressBar {
-		height: 100%;
-		// padding: 2px;
-		transition: width 0.1s ease-in-out;
-		// position: relative; 
-		top: 0;
-		left: 0;
-		border-radius: 6px;
-	}
-	.highlightedSection {
-		height: 120%;
-		position: absolute;
-		z-index: 1;
-		top: 50%;
-		transform: translate(0, -50%);
-		border-radius: 6px;
-	}
+  .progressBar {
+    height: 100%;
+    transition: width 0.1s ease-in-out;
+    top: 0;
+    left: 0;
+    border-radius: $radius-lg;
+    background-color: $primary-light-color;
+  }
+  .highlightedSection {
+    height: 120%;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    transform: translate(0, -50%);
+    border-radius: $radius-lg;
+    background-color: $primary-color;
+  }
 }
-
