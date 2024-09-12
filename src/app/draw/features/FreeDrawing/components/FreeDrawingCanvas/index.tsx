@@ -5,13 +5,7 @@ import styles from "./styles.module.scss";
 function FreeDrawingCanvas(): ReactElement {
   const { canvasRef } = useDrawing();
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className={styles.canvas}
-      
-    />
-  );
+  return <canvas ref={canvasRef} className={styles.canvas} />;
 }
 
 export default FreeDrawingCanvas;
