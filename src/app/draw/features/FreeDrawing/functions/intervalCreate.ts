@@ -1,4 +1,4 @@
-import { Interval, ScaleInterval } from "@/tyeps";
+import { Interval, ScaleInterval } from "@/types";
 import { Coordinate } from "../dto/curve";
 import { HALF_NOTE, SCALE_NUM, WHOLE_NOTE } from "../const";
 
