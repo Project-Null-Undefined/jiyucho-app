@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { highlightMap2Beat } from "../functions/highlightMap2Beat";
 
 export function useRhythmBar(duration: number) {
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
@@ -11,7 +12,6 @@ export function useRhythmBar(duration: number) {
   const handleKeyDownSpace = (event: KeyboardEvent) => {
     if (event.code === "Space") {
       setPushSpaceKey(true);
-      console.log("Space pressed");
 
       if (!isStarted) {  // まだ開始していない場合は進行状況を開始
         setIsStarted(true);
@@ -22,7 +22,6 @@ export function useRhythmBar(duration: number) {
   const handleKeyUpSpace = (event: KeyboardEvent) => {
     if (event.code === "Space") {
       setPushSpaceKey(false);
-      console.log("Space released");
     }
   };
 
@@ -70,10 +69,15 @@ export function useRhythmBar(duration: number) {
         setCurrentHighlightStart(null);
       }
     }
-    if (progress>=100){
-      //toDoここで関数を使う
+    if (progress>=100&&!pushSpaceKey){
+      setIsFinished(true)
     }
   }, [progress, pushSpaceKey]);
+
+  useEffect(()=>{
+    const Beat=highlightMap2Beat(highlightedSections,8)
+    console.log(Beat) 
+  },[isFinished]);
 
   return { pushSpaceKey, progress, highlightedSections, currentHighlightStart,isStarted };
 }
