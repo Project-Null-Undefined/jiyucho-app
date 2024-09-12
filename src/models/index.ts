@@ -1,5 +1,5 @@
 import { SCALES } from "@/const";
-import { DiatonicChordType, Scale, Settings } from "@/tyeps";
+import { DiatonicChordType, Scale, Settings } from "@/types";
 import { CSSProperties } from "react";
 
 // 1拍

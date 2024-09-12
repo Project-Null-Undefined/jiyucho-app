@@ -1,4 +1,4 @@
-import { BaseScale } from "@/tyeps";
+import { BaseScale } from "@/types";
 
 // 音階
 export const BASE_SCALES = [
