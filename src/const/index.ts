@@ -1,3 +1,5 @@
+import { BaseScale } from "@/types";
+
 // 音階
 export const BASE_SCALES = [
   {
@@ -49,3 +51,5 @@ export const BASE_SCALES = [
     frequency: 493.88,
   },
 ] as const satisfies BaseScale[];
+
+export const SCALES = [...BASE_SCALES.map((s) => s.scale)] as const;
