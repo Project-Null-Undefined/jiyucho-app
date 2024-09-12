@@ -3,6 +3,7 @@
 import styles from "./style.module.scss";
 import colors from "@/styles/colors.module.scss";
 import { useRhythmBar } from "../../hooks/useRhythmBar";
+import HighlightedSections from "../HighlightedSections";
 
 type ProgressBarProps = {
   duration: number; // バーが満タンになるまでの時間（秒）
@@ -11,21 +12,6 @@ type ProgressBarProps = {
 
 export default function ProgressBar({ duration,barWidth}: ProgressBarProps) {
   const { pushSpaceKey,progress,highlightedSections,currentHighlightStart} = useRhythmBar(duration)
-  // ハイライト区間の表示
-  const renderHighlightedSections = () => {
-    return highlightedSections.map((section, index) => (
-      <div
-        key={index}
-        className={styles.highlightedSection}
-        style={{
-          left: `${section.start}%`,
-          width: `${section.end - section.start}%`,
-          backgroundColor: colors.primaryColor, // ハイライト色の適用
-        }}
-      />
-    ));
-  };
-
   return (
     <div 
     className={styles.container}
@@ -66,7 +52,7 @@ export default function ProgressBar({ duration,barWidth}: ProgressBarProps) {
               }}
             />
           )}
-          {renderHighlightedSections()}
+          <HighlightedSections highlightedSections={highlightedSections}/>
         </div>
       </div>
     </div>

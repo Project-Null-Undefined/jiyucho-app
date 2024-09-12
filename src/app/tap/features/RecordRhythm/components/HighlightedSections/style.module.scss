@@ -1,0 +1,13 @@
+//@use "src/styes" as colors;
+
+.highlightedSection {
+	height: 120%;
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	transform: translate(0, -50%);
+	border-radius: 6px;
+	background-color: $primary-color;
+}
+
+
