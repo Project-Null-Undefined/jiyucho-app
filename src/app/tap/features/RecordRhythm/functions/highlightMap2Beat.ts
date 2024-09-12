@@ -2,6 +2,18 @@ import { HighlightedSection } from "../types";
 
 import { Beat } from "@/models";
 
+/**
+ * highlightMap2Beat
+ * 
+ * HighlightedSection 配列を Beat 配列に変換する関数です。
+ * 各ハイライト区間の開始位置と終了位置をもとに、開始位置 (start) と音の長さ (duration) を計算します。
+ * start と duration が同じ場合、そのビートは無視されます。
+ * 
+ * @param {HighlightedSection[]} highlightMap - ハイライト区間を表す配列
+ * @param {number} numberOfBar - 小節数。1小節あたり16拍として計算されます
+ * @returns {Beat[]} - Beat の配列
+ */
+
 export function highlightMap2Beat(
   highlightMap: HighlightedSection[],
   numberOfBar: number
