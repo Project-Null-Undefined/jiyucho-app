@@ -6,6 +6,7 @@ export function useRhythmBar(duration: number) {
   const [highlightedSections, setHighlightedSections] = useState<{ start: number, end: number }[]>([]);
   const [currentHighlightStart, setCurrentHighlightStart] = useState<number | null>(null);
   const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
+  const [isFinished,setIsFinished]=useState(false);
 
   const handleKeyDownSpace = (event: KeyboardEvent) => {
     if (event.code === "Space") {
@@ -68,6 +69,9 @@ export function useRhythmBar(duration: number) {
         ]);
         setCurrentHighlightStart(null);
       }
+    }
+    if (progress>=100){
+      //toDoここで関数を使う
     }
   }, [progress, pushSpaceKey]);
 
