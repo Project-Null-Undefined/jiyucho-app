@@ -2,13 +2,13 @@
 
 import styles from './style.module.scss';
 
-type ProgressBarProps = {
-  pushSpaceKey: boolean;
+interface ProgressBarProps {
+  isPushedSpaceKey: boolean;
   progress: number;
   currentHighlightStart: number | null;
-};
+}
 
-export default function ProgressBar({ pushSpaceKey, progress, currentHighlightStart }: ProgressBarProps) {
+export default function ProgressBar({ isPushedSpaceKey, progress, currentHighlightStart }: ProgressBarProps) {
   return (
     <div className={styles.container} style={{}}>
       <div className={styles.progressContainer}>
@@ -22,7 +22,7 @@ export default function ProgressBar({ pushSpaceKey, progress, currentHighlightSt
         />
 
         {/* ハイライト区間の表示 */}
-        {pushSpaceKey && currentHighlightStart !== null && (
+        {isPushedSpaceKey === true && currentHighlightStart !== null && (
           <div
             className={styles.highlightedSection}
             style={{

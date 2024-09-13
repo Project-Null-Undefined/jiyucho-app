@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { highlightMap2Beat } from '../functions/highlightMap2Beat';
 import { useAtomValue } from 'jotai';
 import { barCountAtom, beatCountAtom, minNoteDurationAtom } from '@/stores/settings';
@@ -15,24 +15,24 @@ export function useRhythmBar(duration: number) {
   const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
   const [isFinished, setIsFinished] = useState(false);
 
-  const handleKeyDownSpace = (event: KeyboardEvent) => {
-    if (event.code === 'Space') {
-      setPushSpaceKey(true);
-      console.log('Space pressed');
-
-      if (!isStarted) {
-        // まだ開始していない場合は進行状況を開始
+  const handleKeyDownSpace = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.code === 'Space') {
+        setPushSpaceKey(true);
         setIsStarted(true);
       }
-    }
-  };
+    },
+    [setPushSpaceKey, isStarted],
+  );
 
-  const handleKeyUpSpace = (event: KeyboardEvent) => {
-    if (event.code === 'Space') {
-      setPushSpaceKey(false);
-      console.log('Space released');
-    }
-  };
+  const handleKeyUpSpace = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.code === 'Space') {
+        setPushSpaceKey(false);
+      }
+    },
+    [setPushSpaceKey],
+  );
 
   // useEffectでキーボードイベントを監視
   useEffect(() => {
@@ -44,7 +44,7 @@ export function useRhythmBar(duration: number) {
       window.removeEventListener('keydown', handleKeyDownSpace);
       window.removeEventListener('keyup', handleKeyUpSpace);
     };
-  }, []);
+  }, [handleKeyDownSpace, handleKeyUpSpace]);
 
   useEffect(() => {
     if (!isStarted) return; // 進行状況が始まっていない場合は何もしない
@@ -82,6 +82,7 @@ export function useRhythmBar(duration: number) {
 
   useEffect(() => {
     const length = barCount * beatCount * minNoteDuration;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const Beat = highlightMap2Beat(highlightedSections, length);
   }, [isFinished]);
 

@@ -20,6 +20,7 @@ export function useDrawing() {
         paper.setup(canvas);
         const curveInformation = await curveDraw();
         const curveCoordinates = splitCurve(curveInformation.coordinates, totalBeatCount);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const interval = createInterval(curveCoordinates);
       }
     };

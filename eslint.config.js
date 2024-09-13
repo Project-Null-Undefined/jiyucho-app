@@ -31,6 +31,7 @@ export default [
     },
     rules: {
       '@next/next/no-img-element': 'error',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       'no-console': [
         'error',
         {
