@@ -2,23 +2,41 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 
+import nextPlugin from '@next/eslint-plugin-next';
+import hooksPlugin from 'eslint-plugin-react-hooks';
+import typescriptParser from '@typescript-eslint/parser';
+
+import { fixupPluginRules } from '@eslint/compat';
+
 export default [
   {
-    ignores: ['src/types/bindings.ts', 'src-tauri/**'],
-  },
-  {
-    files: ['**/*.{ts,tsx}'],
+    ignores: ['.next/**', 'src-tauri/**'],
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
+    files: ['**/*.{ts,tsx}'],
     settings: {
       react: {
         version: 'detect',
       },
     },
+    languageOptions: {
+      parser: typescriptParser,
+    },
+    plugins: {
+      '@next/next': nextPlugin,
+      'react-hooks': fixupPluginRules(hooksPlugin),
+    },
     rules: {
+      '@next/next/no-img-element': 'error',
+      'no-console': [
+        'error',
+        {
+          allow: ['warn', 'error'],
+        },
+      ],
       'react/boolean-prop-naming': ['error', { validateNested: true }],
       'react/checked-requires-onchange-or-readonly': 'error',
       'react/destructuring-assignment': ['error', 'always'],
