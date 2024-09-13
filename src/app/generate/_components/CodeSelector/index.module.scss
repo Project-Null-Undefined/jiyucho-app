@@ -1,2 +1,16 @@
-.code_selector {
+.code_selector_section {
+  display: grid;
+  grid-template-columns: repeat(var(--bar-count), calc(10px * var(--cols-per-bar)));
+  align-items: center;
+  overflow-x: scroll;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+
+  .none {
+    text-align: center;
+  }
 }
