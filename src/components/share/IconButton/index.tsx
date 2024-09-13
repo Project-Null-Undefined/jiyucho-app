@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { ReactElement } from "react";
-import styles from "./index.module.scss";
+import { ReactElement } from 'react';
+import styles from './index.module.scss';
 
 interface Props {
   onClick: () => void;

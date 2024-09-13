@@ -1,5 +1,5 @@
-import { WHITE_KEYS } from "..";
-import styles from "./index.module.scss";
+import { WHITE_KEYS } from '..';
+import styles from './index.module.scss';
 
 interface Props {
   scale: (typeof WHITE_KEYS)[number];
@@ -8,22 +8,22 @@ interface Props {
 
 export default function PianoKey({ scale, octave }: Props) {
   switch (scale) {
-    case "C":
+    case 'C':
       return <PianoKeyC octave={octave} />;
-    case "D":
+    case 'D':
       return <PianoKeyD />;
-    case "E":
+    case 'E':
       return <PianoKeyE />;
-    case "F":
+    case 'F':
       return <PianoKeyF />;
-    case "G":
+    case 'G':
       return <PianoKeyG />;
-    case "A":
+    case 'A':
       return <PianoKeyA />;
-    case "B":
+    case 'B':
       return <PianoKeyB />;
     default:
-      throw new Error("Invalid scale");
+      throw new Error('Invalid scale');
   }
 }
 

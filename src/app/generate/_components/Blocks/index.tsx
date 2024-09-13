@@ -1,28 +1,23 @@
-"use client";
+'use client';
 
-import { useAtomValue } from "jotai";
-import styles from "./index.module.scss";
-import {
-  barCountAtom,
-  octaveRangeAtom,
-  beatCountAtom,
-  minNoteDurationAtom,
-} from "@/stores/settings";
-import { CSSProperties, useMemo } from "react";
-import { Bar, DiatonicChord, Music, Note } from "@/models";
-import Block from "./Block";
-import { MAX, MIN } from "@/const";
+import { useAtomValue } from 'jotai';
+import styles from './index.module.scss';
+import { barCountAtom, octaveRangeAtom, beatCountAtom, minNoteDurationAtom } from '@/stores/settings';
+import { CSSProperties, useMemo } from 'react';
+import { Bar, DiatonicChord, Music, Note } from '@/models';
+import Block from './Block';
+import { MAX, MIN } from '@/const';
 
 // 仮の楽譜
 const music = new Music({
   bars: [
     new Bar({
       notes: [
-        new Note({ scale: "C", octave: 4, start: 0, duration: 4 }),
-        new Note({ scale: "D", octave: 4, start: 4, duration: 4 }),
+        new Note({ scale: 'C', octave: 4, start: 0, duration: 4 }),
+        new Note({ scale: 'D', octave: 4, start: 4, duration: 4 }),
       ],
       chord: new DiatonicChord({
-        scale: "C",
+        scale: 'C',
         octave: 2,
         start: 0,
         duration: 16,
@@ -30,11 +25,11 @@ const music = new Music({
     }),
     new Bar({
       notes: [
-        new Note({ scale: "C", octave: 5, start: 0, duration: 4 }),
-        new Note({ scale: "D", octave: 5, start: 4, duration: 4 }),
+        new Note({ scale: 'C', octave: 5, start: 0, duration: 4 }),
+        new Note({ scale: 'D', octave: 5, start: 4, duration: 4 }),
       ],
       chord: new DiatonicChord({
-        scale: "C",
+        scale: 'C',
         octave: 2,
         start: 0,
         duration: 16,
@@ -42,11 +37,11 @@ const music = new Music({
     }),
     new Bar({
       notes: [
-        new Note({ scale: "C", octave: 3, start: 0, duration: 4 }),
-        new Note({ scale: "D", octave: 3, start: 4, duration: 4 }),
+        new Note({ scale: 'C', octave: 3, start: 0, duration: 4 }),
+        new Note({ scale: 'D', octave: 3, start: 4, duration: 4 }),
       ],
       chord: new DiatonicChord({
-        scale: "C",
+        scale: 'C',
         octave: 2,
         start: 0,
         duration: 16,
@@ -68,9 +63,9 @@ export default function Blocks() {
     () =>
       ({
         // 1小節あたりのカラム数
-        ["--cols-per-bar" as string]: beatCount * minNoteDuration,
-        ["--cols" as string]: cols,
-        ["--rows" as string]: rows,
+        ['--cols-per-bar' as string]: beatCount * minNoteDuration,
+        ['--cols' as string]: cols,
+        ['--rows' as string]: rows,
       }) satisfies CSSProperties,
     [beatCount, minNoteDuration, cols, rows],
   );
@@ -81,17 +76,14 @@ export default function Blocks() {
         <div className={styles.beat_line_container}>
           {Array.from({ length: barCount * beatCount + 1 }).map((_, i) => (
             // 区切り線(縦線)
-            <div
-              key={i}
-              style={{ ["--c" as string]: minNoteDuration * i + 1 }}
-            />
+            <div key={i} style={{ ['--c' as string]: minNoteDuration * i + 1 }} />
           ))}
         </div>
 
         <div className={styles.key_line_container}>
           {Array.from({ length: rows }).map((_, i) => (
             // 区切り線(縦線)
-            <div key={i} style={{ ["--r" as string]: i + 1 }} />
+            <div key={i} style={{ ['--r' as string]: i + 1 }} />
           ))}
         </div>
 
@@ -100,12 +92,7 @@ export default function Blocks() {
           <div key={bar.id} className={styles.bar_container}>
             {bar.notes.map((note) => (
               // 1音
-              <Block
-                key={note.id}
-                note={note}
-                octaveRange={octaveRange}
-                barIndex={i}
-              />
+              <Block key={note.id} note={note} octaveRange={octaveRange} barIndex={i} />
             ))}
           </div>
         ))}

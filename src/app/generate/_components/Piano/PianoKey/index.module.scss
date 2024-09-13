@@ -34,17 +34,13 @@ $key-height: 25px;
 .key_a {
   &::after {
     // 黒键
-    content: "";
+    content: '';
     position: absolute;
     width: 50%;
     height: $key-height;
     border-right: solid $on-background-color 1px;
     border-block: solid $on-background-color 1px;
-    background-color: color-mix(
-      in srgb,
-      $on-background-color,
-      $background-color 90%
-    );
+    background-color: color-mix(in srgb, $on-background-color, $background-color 90%);
     position: absolute;
     top: -$key-height / 2;
     left: 0;
