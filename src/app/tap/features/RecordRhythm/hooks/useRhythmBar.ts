@@ -76,7 +76,6 @@ export function useRhythmBar(duration: number) {
 
   useEffect(()=>{
     const Beat=highlightMap2Beat(highlightedSections,8)
-    console.log(Beat) 
   },[isFinished]);
 
   return { pushSpaceKey, progress, highlightedSections, currentHighlightStart,isStarted };
