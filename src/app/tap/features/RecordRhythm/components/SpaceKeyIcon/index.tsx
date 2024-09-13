@@ -5,12 +5,12 @@ interface SpaceKeyIconProps {
 export default function SpaceKeyIcon({ fontsize }: SpaceKeyIconProps) {
   return (
     <div
-        className={styles.container}
-        style={{
-          fontSize: fontsize,
-        }}
+      className={styles.container}
+      style={{
+        fontSize: fontsize,
+      }}
     >
-        <text>SPACE</text>
-      </div>
+      <text>SPACE</text>
+    </div>
   );
 }

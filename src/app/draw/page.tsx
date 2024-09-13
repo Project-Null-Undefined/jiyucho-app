@@ -8,13 +8,13 @@ import DrawingText from './features/FreeDrawing/components/DrawingText';
 function DrawPage(): ReactElement {
   return (
     <div className={styles.container}>
-        <div className={styles.freeDrawingCanvasContainer}>
-          <FreeDrawingCanvas />
-        </div>
-        <div className={styles.drawingTextContainer}>
-          <DrawingText text="Draw freely" />
-        </div>
+      <div className={styles.freeDrawingCanvasContainer}>
+        <FreeDrawingCanvas />
       </div>
+      <div className={styles.drawingTextContainer}>
+        <DrawingText text="Draw freely" />
+      </div>
+    </div>
   );
 }
 

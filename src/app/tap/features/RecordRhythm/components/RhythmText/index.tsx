@@ -8,13 +8,13 @@ interface RhythmTextProps {
 export default function RhythmText({ text, fontsize }: RhythmTextProps) {
   return (
     <div
-        className={styles.container}
-        style={{
-          fontSize: fontsize,
-        }}
+      className={styles.container}
+      style={{
+        fontSize: fontsize,
+      }}
     >
-        <text>{text}</text>
-        <SpaceKeyIcon fontsize={fontsize} />
-      </div>
+      <text>{text}</text>
+      <SpaceKeyIcon fontsize={fontsize} />
+    </div>
   );
 }
