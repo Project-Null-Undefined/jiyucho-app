@@ -3,8 +3,14 @@ import paper from 'paper';
 import { curveDraw } from '../functions/curveDraw';
 import { splitCurve } from '../functions/curveSprit';
 import { createInterval } from '../functions/intervalCreate';
+import { useAtomValue } from 'jotai';
+import { barCountAtom, beatCountAtom } from '@/stores/settings';
 
 export function useDrawing() {
+  const barCount = useAtomValue(barCountAtom);
+  const beatCount = useAtomValue(beatCountAtom);
+  const totalBeatCount = barCount * beatCount;
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -13,7 +19,7 @@ export function useDrawing() {
       if (canvas) {
         paper.setup(canvas);
         const curveInformation = await curveDraw();
-        const curveCoordinates = splitCurve(curveInformation.coordinates);
+        const curveCoordinates = splitCurve(curveInformation.coordinates, totalBeatCount);
         const interval = createInterval(curveCoordinates);
       }
     };
