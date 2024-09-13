@@ -104,11 +104,7 @@ export class Bar extends Identifiable {
   declare chordIndex: number;
   declare chords: DiatonicChord[];
 
-  constructor(props: {
-    notes: Note[];
-    chordIndex?: number;
-    chords: DiatonicChord[];
-  }) {
+  constructor(props: { notes: Note[]; chordIndex?: number; chords: DiatonicChord[] }) {
     const { notes, chordIndex = -1, chords = [] } = props;
 
     super();
