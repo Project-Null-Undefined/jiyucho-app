@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $shadow-color;
+  background-color: $background-color;
+  width: 150px;
+  height: 40px;
+  border-radius: $radius-xl;
+  box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.24);
+}

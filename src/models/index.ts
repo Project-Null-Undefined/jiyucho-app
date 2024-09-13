@@ -1,6 +1,6 @@
-import { MAX, MIN, SCALES } from "@/const";
-import { DiatonicChordType, Scale, Settings } from "@/types";
-import { CSSProperties } from "react";
+import { MAX, MIN, SCALES } from '@/const';
+import { DiatonicChordType, Scale, Settings } from '@/types';
+import { CSSProperties } from 'react';
 
 // IDを持つ基底クラス
 class Identifiable {
@@ -34,12 +34,7 @@ export class Note extends Beat {
   declare octave: number;
   declare scale: Scale;
 
-  constructor(props: {
-    scale: Scale;
-    octave: number;
-    start: number;
-    duration: number;
-  }) {
+  constructor(props: { scale: Scale; octave: number; start: number; duration: number }) {
     const { scale, octave, start, duration } = props;
 
     super(start, duration);
@@ -51,10 +46,7 @@ export class Note extends Beat {
   /**
    * 描画位置をcss変数として取得
    */
-  public getPositionStyleVars(
-    barIndex: number,
-    octaveRange: Settings["octaveRange"],
-  ): CSSProperties {
+  public getPositionStyleVars(barIndex: number, octaveRange: Settings['octaveRange']): CSSProperties {
     // 1小節の
     const colStart = this.start + 1;
     const colEnd = this.start + this.duration + 1;
@@ -64,16 +56,15 @@ export class Note extends Beat {
     // 相対的な小節の位置
     const relativeBarPosition = this.octave - octaveRange[MIN];
     // 小節の位置
-    const barPosition =
-      (octaveRange[MAX] - octaveRange[MIN] - relativeBarPosition + 1) * 12;
+    const barPosition = (octaveRange[MAX] - octaveRange[MIN] - relativeBarPosition + 1) * 12;
 
     const rowStart = barPosition - scalePosition + 1;
 
     return {
-      ["--bar-index" as string]: barIndex,
-      ["--col-start" as string]: colStart,
-      ["--col-end" as string]: colEnd,
-      ["--row-start" as string]: rowStart,
+      ['--bar-index' as string]: barIndex,
+      ['--col-start' as string]: colStart,
+      ['--col-end' as string]: colEnd,
+      ['--row-start' as string]: rowStart,
     };
   }
 
@@ -93,7 +84,7 @@ export class DiatonicChord extends Note {
    */
   public getType(): DiatonicChordType {
     // TODO
-    return "major";
+    return 'major';
   }
 
   /**
