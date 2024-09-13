@@ -1,23 +1,6 @@
 import { Settings } from "@/types";
 import { atom } from "jotai";
 
-// デフォルトの設定(Readonly)
-export const settingsAtom = atom<Settings>((get) => {
-  const bpm = get(bpnAtom);
-  const octaveRange = get(octaveRangeAtom);
-  const barCount = get(barCountAtom);
-  const beatCount = get(beatCountAtom);
-  const minNoteDuration = get(minNoteDurationAtom);
-
-  return {
-    bpm,
-    octaveRange,
-    barCount,
-    beatCount,
-    minNoteDuration,
-  };
-});
-
 // bpm
 export const bpnAtom = atom<Settings["bpm"]>(120);
 // 表示する音階の範囲
