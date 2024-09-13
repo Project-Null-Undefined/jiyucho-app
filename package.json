@@ -7,6 +7,8 @@
     "start": "next start",
     "lint": "next lint",
     "tauri": "tauri",
+    "format": "prettier --write ./src/",
+    "format:ci": "prettier --check ./src/",
     "typegen:scss": "typed-scss-modules src/styles/**/*.module.scss",
     "prebuild": "node --run typegen:scss",
     "storybook": "storybook dev -p 6006",

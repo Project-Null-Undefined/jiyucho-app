@@ -1,6 +1,6 @@
-import { SCALES } from "@/const";
-import { DiatonicChordType, Scale, Settings } from "@/types";
-import { CSSProperties } from "react";
+import { SCALES } from '@/const';
+import { DiatonicChordType, Scale, Settings } from '@/types';
+import { CSSProperties } from 'react';
 
 // 1拍
 export class Beat {
@@ -20,12 +20,7 @@ export class Note extends Beat {
   octave: number;
   scale: Scale;
 
-  constructor(props: {
-    scale: Scale;
-    octave: number;
-    start: number;
-    duration: number;
-  }) {
+  constructor(props: { scale: Scale; octave: number; start: number; duration: number }) {
     const { scale, octave, start, duration } = props;
 
     super(start, duration);
@@ -37,7 +32,7 @@ export class Note extends Beat {
   /**
    * 描画位置をcss変数として取得
    */
-  public getStyleVars(octaveRange: Settings["octaveRange"]): CSSProperties {
+  public getStyleVars(octaveRange: Settings['octaveRange']): CSSProperties {
     const colStart = this.start + 1;
     const colEnd = this.start + this.duration + 1;
 
@@ -45,9 +40,9 @@ export class Note extends Beat {
     const rowStart = i + (this.octave - octaveRange[0]) * 12 + 1;
 
     return {
-      ["--col-start" as string]: colStart,
-      ["--col-end" as string]: colEnd,
-      ["--row-start" as string]: rowStart,
+      ['--col-start' as string]: colStart,
+      ['--col-end' as string]: colEnd,
+      ['--row-start' as string]: rowStart,
     };
   }
 
@@ -67,7 +62,7 @@ export class DiatonicChord extends Note {
    */
   public getType(): DiatonicChordType {
     // TODO
-    return "major";
+    return 'major';
   }
 
   /**

@@ -1,15 +1,15 @@
-import { BASE_SCALES } from "@/const";
-import { Beat, Note } from "@/models";
+import { BASE_SCALES } from '@/const';
+import { Beat, Note } from '@/models';
 
 export interface BaseScale {
   scale: string;
   // 周波数(Hz) ex: 261.63
   frequency: number;
 }
-export type Scale = (typeof BASE_SCALES)[number]["scale"];
+export type Scale = (typeof BASE_SCALES)[number]['scale'];
 
 // コードの種類
-export type DiatonicChordType = "major" | "minor" | "diminished" | "augmented";
+export type DiatonicChordType = 'major' | 'minor' | 'diminished' | 'augmented';
 
 // メロディー (length = 4拍 * 8小節)
 export type Melody = Note[];
