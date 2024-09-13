@@ -1,4 +1,4 @@
-@use "sass:meta";
+@use 'sass:meta';
 
 @mixin hoveredColor($color, $transition-time, $apply-to: color) {
   transition: #{$apply-to} $transition-time;

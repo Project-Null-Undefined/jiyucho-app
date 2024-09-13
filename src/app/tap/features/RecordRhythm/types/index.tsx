@@ -1,4 +1,4 @@
 export type HighlightedSection = {
-    start: number;
-    end: number;
+  start: number;
+  end: number;
 };

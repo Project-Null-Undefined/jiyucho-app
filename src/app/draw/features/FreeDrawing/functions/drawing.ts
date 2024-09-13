@@ -1,5 +1,4 @@
-import paper from "paper";
-
+import paper from 'paper';
 
 export function setupDrawingTool() {
   let path: paper.Path | null = null;
@@ -8,7 +7,7 @@ export function setupDrawingTool() {
 
   tool.onMouseDown = (event: paper.ToolEvent) => {
     path = new paper.Path();
-    path.strokeColor = new paper.Color("#4597f8");
+    path.strokeColor = new paper.Color('#4597f8');
     path.strokeWidth = 2;
     path.add(event.point);
   };

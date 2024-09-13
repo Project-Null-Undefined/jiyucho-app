@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { ReactElement } from "react";
-import FreeDrawingCanvas from "./features/FreeDrawing/components/FreeDrawingCanvas";
-import styles from "./styles.module.scss";
-import DrawingText from "./features/FreeDrawing/components/DrawingText";
+import { ReactElement } from 'react';
+import FreeDrawingCanvas from './features/FreeDrawing/components/FreeDrawingCanvas';
+import styles from './styles.module.scss';
+import DrawingText from './features/FreeDrawing/components/DrawingText';
 
 function DrawPage(): ReactElement {
   return (
