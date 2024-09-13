@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { highlightMap2Beat } from "../functions/highlightMap2Beat";
+import { highlightMap2Beat } from '../functions/highlightMap2Beat';
 
 export function useRhythmBar(duration: number) {
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
@@ -7,12 +7,12 @@ export function useRhythmBar(duration: number) {
   const [highlightedSections, setHighlightedSections] = useState<{ start: number; end: number }[]>([]);
   const [currentHighlightStart, setCurrentHighlightStart] = useState<number | null>(null);
   const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
-  const [isFinished,setIsFinished]=useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   const handleKeyDownSpace = (event: KeyboardEvent) => {
     if (event.code === 'Space') {
       setPushSpaceKey(true);
-      console.log("Space pressed");
+      console.log('Space pressed');
 
       if (!isStarted) {
         // まだ開始していない場合は進行状況を開始
@@ -24,7 +24,7 @@ export function useRhythmBar(duration: number) {
   const handleKeyUpSpace = (event: KeyboardEvent) => {
     if (event.code === 'Space') {
       setPushSpaceKey(false);
-      console.log("Space released");
+      console.log('Space released');
     }
   };
 
@@ -69,14 +69,14 @@ export function useRhythmBar(duration: number) {
         setCurrentHighlightStart(null);
       }
     }
-    if (progress>=100&&!pushSpaceKey){
-      setIsFinished(true)
+    if (progress >= 100 && !pushSpaceKey) {
+      setIsFinished(true);
     }
   }, [progress, pushSpaceKey]);
 
-  useEffect(()=>{
-    const Beat=highlightMap2Beat(highlightedSections,8)
-  },[isFinished]);
+  useEffect(() => {
+    const Beat = highlightMap2Beat(highlightedSections, 8);
+  }, [isFinished]);
 
   return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted };
 }

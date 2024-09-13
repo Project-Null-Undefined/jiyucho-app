@@ -2,4 +2,4 @@
  * 1小節あたりに含まれる1/4拍の数を表す定数。
  * 1小節には4拍としているので4*4=16
  */
-export const ONE_BAR = 16
+export const ONE_BAR = 16;
