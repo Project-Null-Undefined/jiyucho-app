@@ -1,39 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useRhythmBar(duration: number) {
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [highlightedSections, setHighlightedSections] = useState<{ start: number, end: number }[]>([]);
+  const [highlightedSections, setHighlightedSections] = useState<{ start: number; end: number }[]>([]);
   const [currentHighlightStart, setCurrentHighlightStart] = useState<number | null>(null);
   const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
 
   const handleKeyDownSpace = (event: KeyboardEvent) => {
-    if (event.code === "Space") {
+    if (event.code === 'Space') {
       setPushSpaceKey(true);
-      console.log("Space pressed");
+      console.log('Space pressed');
 
-      if (!isStarted) {  // まだ開始していない場合は進行状況を開始
+      if (!isStarted) {
+        // まだ開始していない場合は進行状況を開始
         setIsStarted(true);
       }
     }
   };
 
   const handleKeyUpSpace = (event: KeyboardEvent) => {
-    if (event.code === "Space") {
+    if (event.code === 'Space') {
       setPushSpaceKey(false);
-      console.log("Space released");
+      console.log('Space released');
     }
   };
 
   // useEffectでキーボードイベントを監視
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDownSpace);
-    window.addEventListener("keyup", handleKeyUpSpace);
+    window.addEventListener('keydown', handleKeyDownSpace);
+    window.addEventListener('keyup', handleKeyUpSpace);
 
     // クリーンアップ関数でイベントリスナーを削除
     return () => {
-      window.removeEventListener("keydown", handleKeyDownSpace);
-      window.removeEventListener("keyup", handleKeyUpSpace);
+      window.removeEventListener('keydown', handleKeyDownSpace);
+      window.removeEventListener('keyup', handleKeyUpSpace);
     };
   }, []);
 
@@ -62,14 +63,11 @@ export function useRhythmBar(duration: number) {
       }
     } else {
       if (currentHighlightStart !== null) {
-        setHighlightedSections((prev) => [
-          ...prev,
-          { start: currentHighlightStart, end: progress },
-        ]);
+        setHighlightedSections((prev) => [...prev, { start: currentHighlightStart, end: progress }]);
         setCurrentHighlightStart(null);
       }
     }
   }, [progress, pushSpaceKey]);
 
-  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart,isStarted };
+  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted };
 }

@@ -1,5 +1,5 @@
-import styles from "./style.module.scss";
-import SpaceKeyIcon from "@/app/tap/features/RecordRhythm/components/SpaceKeyIcon";
+import styles from './style.module.scss';
+import SpaceKeyIcon from '@/app/tap/features/RecordRhythm/components/SpaceKeyIcon';
 
 type RhythmTextProps = {
   text: string;
