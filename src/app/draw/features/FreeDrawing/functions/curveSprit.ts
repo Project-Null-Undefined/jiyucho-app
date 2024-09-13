@@ -1,10 +1,9 @@
-import { BAR_NUM, NOTE_NUM } from '../const';
 import { Coordinate } from '../dto/curve';
 
-export function splitCurve(coordinates: Coordinate[]): Coordinate[] {
+export function splitCurve(coordinates: Coordinate[], totalBeatCount: number): Coordinate[] {
   const resultCurve = Array.from(
-    { length: BAR_NUM * NOTE_NUM },
-    (_, i) => coordinates[Math.floor((i * coordinates.length) / (BAR_NUM * NOTE_NUM))],
+    { length: totalBeatCount },
+    (_, i) => coordinates[Math.floor((i * coordinates.length) / totalBeatCount)],
   );
 
   return resultCurve;

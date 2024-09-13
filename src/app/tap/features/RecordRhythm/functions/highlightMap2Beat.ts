@@ -1,7 +1,6 @@
 import { HighlightedSection } from '../types';
 
 import { Beat } from '@/models';
-import { ONE_BAR } from '../const';
 
 /**
  * highlightMap2Beat
@@ -15,8 +14,7 @@ import { ONE_BAR } from '../const';
  * @returns {Beat[]} - Beat の配列
  */
 
-export function highlightMap2Beat(highlightMap: HighlightedSection[], numberOfBar: number): Beat[] {
-  const length = numberOfBar * ONE_BAR;
+export function highlightMap2Beat(highlightMap: HighlightedSection[], length: number): Beat[] {
   const minBeat = 100 / length;
 
   return highlightMap
