@@ -49,8 +49,8 @@ $key-height: 25px;
 
 .key_c {
   display: flex;
-  justify-content: end;
-  align-items: end;
+  justify-content: flex-end;
+  align-items: flex-end;
 
   span {
     line-height: $key-height;
