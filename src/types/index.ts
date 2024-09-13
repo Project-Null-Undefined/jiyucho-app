@@ -28,7 +28,8 @@ export interface Settings {
 }
 
 // 音程 (1音目を0として 全音:2, 半音:1 で表現)
-export type Interval = number[];
+export type Interval = 0 | 1 | 2;
+export type ScaleInterval = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 // リズム (8小節の場合は length = 8小節 * 4拍 * 4 = 128)
 export type Rhythm = Beat[];
