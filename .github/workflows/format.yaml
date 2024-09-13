@@ -32,8 +32,5 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Generate TypeScript types
-        run: yarn typegen:scss
-
       - name: format
         run: yarn format:ci
