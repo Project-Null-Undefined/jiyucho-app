@@ -3,12 +3,16 @@
 import { useAtomValue } from 'jotai';
 import styles from './index.module.scss';
 import { barCountAtom, octaveRangeAtom, beatCountAtom, minNoteDurationAtom } from '@/stores/settings';
-import { CSSProperties, useMemo } from 'react';
+import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 import Block from './Block';
 import { MAX, MIN } from '@/const';
 import { music } from '@/samples';
 
-export default function Blocks() {
+interface Props {
+  onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
+}
+
+export default forwardRef(function Blocks({ onScroll }: Props, ref: ForwardedRef<HTMLElement>) {
   const octaveRange = useAtomValue(octaveRangeAtom); // 表示する音域
   const barCount = useAtomValue(barCountAtom); // 小節数
   const beatCount = useAtomValue(beatCountAtom); // 拍子
@@ -29,7 +33,7 @@ export default function Blocks() {
   );
 
   return (
-    <section className={styles.blocks}>
+    <section className={styles.blocks} onScroll={onScroll} ref={ref}>
       <div className={styles.innner} style={style}>
         <div className={styles.beat_line_container}>
           {Array.from({ length: barCount * beatCount + 1 }).map((_, i) => (
@@ -57,4 +61,4 @@ export default function Blocks() {
       </div>
     </section>
   );
-}
+});

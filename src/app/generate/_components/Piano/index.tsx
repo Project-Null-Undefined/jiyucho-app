@@ -8,7 +8,11 @@ import { MAX, MIN } from '@/const';
 
 export const WHITE_KEYS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'] as const;
 
-export default function Piano() {
+interface Props {
+  onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
+}
+
+export default function Piano({ onScroll }: Props) {
   const octaveRange = useAtomValue(octaveRangeAtom);
 
   const length = octaveRange[MAX] - octaveRange[MIN] + 1;
