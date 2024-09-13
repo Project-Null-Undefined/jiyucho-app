@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import paper from "paper";
-import { curveDraw } from "../functions/curveDraw";
-import { splitCurve } from "../functions/curveSprit";
-import { createInterval } from "../functions/intervalCreate";
+import { useEffect, useRef } from 'react';
+import paper from 'paper';
+import { curveDraw } from '../functions/curveDraw';
+import { splitCurve } from '../functions/curveSprit';
+import { createInterval } from '../functions/intervalCreate';
 
 export function useDrawing() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

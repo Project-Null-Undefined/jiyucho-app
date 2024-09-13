@@ -1,6 +1,6 @@
-import paper from "paper";
-import styles from "@/styles/colors.module.scss";
-import { Coordinate, CurveInformationDto } from "../dto/curve";
+import paper from 'paper';
+import styles from '@/styles/colors.module.scss';
+import { Coordinate, CurveInformationDto } from '../dto/curve';
 
 function handleMouseDown(event: paper.ToolEvent): paper.Path {
   const newPath = new paper.Path();
@@ -16,19 +16,15 @@ function handleMouseDrag(event: paper.ToolEvent, path: paper.Path | null) {
   }
 }
 
-async function handleMouseUp(
-  path: paper.Path | null
-): Promise<CurveInformationDto> {
+async function handleMouseUp(path: paper.Path | null): Promise<CurveInformationDto> {
   let curveInformation: CurveInformationDto = { coordinates: [], length: 0 };
 
   if (path) {
     path.smooth();
-    const coordinates: Coordinate[] = path.segments.map(
-      (segment: paper.Segment) => ({
-        x: segment.point.x,
-        y: segment.point.y,
-      })
-    );
+    const coordinates: Coordinate[] = path.segments.map((segment: paper.Segment) => ({
+      x: segment.point.x,
+      y: segment.point.y,
+    }));
     const length = path.length;
 
     curveInformation = { coordinates, length };
