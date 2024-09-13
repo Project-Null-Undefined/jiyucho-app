@@ -1,6 +1,7 @@
 import { HighlightedSection } from "../types";
 
 import { Beat } from "@/models";
+import { ONE_BAR } from "../const";
 
 /**
  * highlightMap2Beat
@@ -10,7 +11,7 @@ import { Beat } from "@/models";
  * start と duration が同じ場合、そのビートは無視されます。
  * 
  * @param {HighlightedSection[]} highlightMap - ハイライト区間を表す配列
- * @param {number} numberOfBar - 小節数。1小節あたり16拍として計算されます
+ * @param {number} numberOfBar - 小節数。1小節あたり4拍として計算されます
  * @returns {Beat[]} - Beat の配列
  */
 
@@ -18,7 +19,7 @@ export function highlightMap2Beat(
   highlightMap: HighlightedSection[],
   numberOfBar: number
 ): Beat[] {
-  const length = numberOfBar * 16;
+  const length = numberOfBar * ONE_BAR;
   const minBeat = 100 / length;
 
   return highlightMap
