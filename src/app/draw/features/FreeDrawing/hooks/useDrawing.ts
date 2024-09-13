@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import paper from 'paper';
 import { curveDraw } from '../functions/curveDraw';
 import { splitCurve } from '../functions/curveSprit';
@@ -6,6 +6,7 @@ import { createInterval } from '../functions/intervalCreate';
 
 export function useDrawing() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isCurveDrawn, setIsCurveDrawn] = useState(false);
 
   useEffect(() => {
     const setupCanvas = async () => {
@@ -24,6 +25,5 @@ export function useDrawing() {
       paper.project.clear();
     };
   });
-
-  return { canvasRef };
+  return { canvasRef, isCurveDrawn };
 }

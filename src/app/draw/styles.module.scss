@@ -4,13 +4,22 @@
   height: 100vh;
   padding: $md;
   gap: $md;
+  box-sizing: border-box;
 
   .freeDrawingCanvasContainer {
     width: 100%;
-    height: 100%;
+    height: 95%;
+  }
+
+  .confirmButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $xl;
   }
 
   .drawingTextContainer {
+    height: 5%;
     text-align: center;
   }
 }

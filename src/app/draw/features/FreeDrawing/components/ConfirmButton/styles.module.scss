@@ -1,0 +1,17 @@
+.button {
+  border: 1px solid $button-border-color;
+  border-radius: $radius-md;
+  color: $text-color;
+  padding: $sm $xl;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $button-hover-background-color;
+  }
+
+  &:disabled {
+    color: lighten($text-color, 30%);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
