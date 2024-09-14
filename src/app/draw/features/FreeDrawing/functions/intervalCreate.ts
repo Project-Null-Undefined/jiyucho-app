@@ -1,5 +1,5 @@
 import { Interval, ScaleInterval } from '@/types';
-import { Coordinate } from '../dto/curve';
+import { Coordinate } from '../types/curve';
 import { HALF_NOTE, SCALE_NUM, WHOLE_NOTE } from '../const';
 
 export function createInterval(curveCoordinates: Coordinate[]): Interval[] {

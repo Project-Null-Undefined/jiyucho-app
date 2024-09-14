@@ -1,10 +1,12 @@
-import { ReactElement } from 'react';
-import { useDrawing } from '../../hooks/useDrawing';
+import { ReactElement, RefObject } from 'react';
+
 import styles from './styles.module.scss';
 
-function FreeDrawingCanvas(): ReactElement {
-  const { canvasRef } = useDrawing();
+interface Props {
+  canvasRef: RefObject<HTMLCanvasElement>;
+}
 
+function FreeDrawingCanvas({ canvasRef }: Props): ReactElement {
   return <canvas className={styles.canvas} ref={canvasRef} />;
 }
 

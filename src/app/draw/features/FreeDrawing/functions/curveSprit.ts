@@ -1,4 +1,4 @@
-import { Coordinate } from '../dto/curve';
+import { Coordinate } from '../types/curve';
 
 export function splitCurve(coordinates: Coordinate[], totalBeatCount: number): Coordinate[] {
   const resultCurve = Array.from(
