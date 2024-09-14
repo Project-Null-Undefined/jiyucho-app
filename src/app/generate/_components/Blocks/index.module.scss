@@ -1,0 +1,59 @@
+.blocks {
+  width: 100%;
+  overflow-x: scroll;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+
+  .innner {
+    grid-template-columns: repeat(var(--cols), 10px);
+    grid-template-rows: repeat(var(--rows), 1fr);
+
+    min-width: 100%;
+    height: 100%;
+    display: grid;
+
+    .beat_line_container {
+      display: contents;
+
+      & > div {
+        grid-row: 1/-1;
+        grid-column-start: var(--c);
+        border-left: solid $on-background-color 0.5px;
+        opacity: 0.3;
+
+        &:nth-of-type(4n + 1) {
+          border-left-width: 1px;
+          opacity: 1;
+        }
+
+        &:last-child {
+          border-left-width: 3px;
+        }
+      }
+    }
+
+    .key_line_container {
+      display: contents;
+
+      & > div:nth-child(12n + 2),
+      & > div:nth-child(12n + 4),
+      & > div:nth-child(12n + 6),
+      & > div:nth-child(12n + 9),
+      & > div:nth-child(12n + 11) {
+        // 黒鍵部分の背景色
+        grid-column: 1/-1;
+        grid-row-start: var(--r);
+        background-color: $on-background-color;
+        opacity: 0.03;
+      }
+    }
+
+    .bar_container {
+      display: contents;
+    }
+  }
+}

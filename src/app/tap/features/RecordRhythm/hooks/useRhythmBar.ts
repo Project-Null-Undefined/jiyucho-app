@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import { highlightMap2Beat } from '../functions/highlightMap2Beat';
+import { useAtomValue } from 'jotai';
+import { barCountAtom, beatCountAtom, minNoteDurationAtom } from '@/stores/settings';
 
 export function useRhythmBar(duration: number) {
+  const barCount = useAtomValue(barCountAtom); // 小節数
+  const beatCount = useAtomValue(beatCountAtom); // 拍子
+  const minNoteDuration = useAtomValue(minNoteDurationAtom); // 最小音符の長さ
+
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
   const [progress, setProgress] = useState(0);
   const [highlightedSections, setHighlightedSections] = useState<{ start: number; end: number }[]>([]);
@@ -75,7 +81,8 @@ export function useRhythmBar(duration: number) {
   }, [progress, pushSpaceKey]);
 
   useEffect(() => {
-    const Beat = highlightMap2Beat(highlightedSections, 8);
+    const length = barCount * beatCount * minNoteDuration;
+    const Beat = highlightMap2Beat(highlightedSections, length);
   }, [isFinished]);
 
   return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted };
