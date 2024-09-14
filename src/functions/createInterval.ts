@@ -1,6 +1,6 @@
 import { Interval, ScaleInterval } from '@/types';
-import { Coordinate } from '../types/curve';
-import { HALF_NOTE, SCALE_NUM, WHOLE_NOTE } from '../const';
+import { Coordinate } from '@/types/draw';
+import { HALF_NOTE, SCALE_NUM, WHOLE_NOTE } from '@/const/draw';
 
 export function createInterval(curveCoordinates: Coordinate[]): Interval[] {
   const yBase = curveCoordinates[0].y;

@@ -1,4 +1,4 @@
-import { HighlightedSection } from '../types';
+import { HighlightedSection } from '@/types/tap';
 
 import { Beat } from '@/models';
 

@@ -1,16 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import paper from 'paper';
-import { splitCurve } from '../functions/curveSprit';
-import { createInterval } from '../functions/intervalCreate';
-import { useAtomValue } from 'jotai';
-import { barCountAtom, beatCountAtom } from '@/stores/settings';
+import { useSetAtom } from 'jotai';
 import styles from '@/styles/colors.module.scss';
-import { Coordinate } from '../types/curve';
+import { Coordinate } from '@/types/draw';
+import { curveCoordinatesAtom } from '@/stores/draw';
 
 export function useDrawing() {
-  const barCount = useAtomValue(barCountAtom);
-  const beatCount = useAtomValue(beatCountAtom);
-  const totalBeatCount = barCount * beatCount;
+  const setCurveCoordinates = useSetAtom(curveCoordinatesAtom);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -54,10 +50,7 @@ export function useDrawing() {
               y: segment.point.y,
             })) as Coordinate[];
 
-            const curveCoordinates = splitCurve(coordinates, totalBeatCount);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const interval = createInterval(curveCoordinates);
-
+            setCurveCoordinates(coordinates);
             setIsCurveDrawn(true);
           }
         };
