@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { highlightedSectionsAtom } from '@/stores/tap';
 
 export function useRhythmBar(duration: number) {
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
   const [progress, setProgress] = useState(0);
-  const setHighlightedSections = useSetAtom(highlightedSectionsAtom);
+  const [highlightedSections, setHighlightedSections] = useAtom(highlightedSectionsAtom);
   const [currentHighlightStart, setCurrentHighlightStart] = useState<number | null>(null);
   const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
 
@@ -71,5 +71,5 @@ export function useRhythmBar(duration: number) {
     }
   }, [progress, pushSpaceKey]);
 
-  return { pushSpaceKey, progress, currentHighlightStart, isStarted };
+  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted };
 }

@@ -6,12 +6,9 @@ import variables from '@/styles/variables.module.scss';
 import styles from './style.module.scss';
 import { useRhythmBar } from './features/RecordRhythm/hooks/useRhythmBar';
 import HighlightedSections from './features/RecordRhythm/components/HighlightedSections';
-import { useAtomValue } from 'jotai';
-import { highlightedSectionsAtom } from '@/stores/tap';
 
 export default function MainPage() {
-  const { pushSpaceKey, progress, currentHighlightStart } = useRhythmBar(10);
-  const highlightedSections = useAtomValue(highlightedSectionsAtom);
+  const { pushSpaceKey, progress, highlightedSections, currentHighlightStart } = useRhythmBar(10);
 
   return (
     <div className={styles.container}>
