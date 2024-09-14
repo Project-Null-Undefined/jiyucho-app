@@ -1,0 +1,13 @@
+.select_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .select {
+    padding: 5px;
+    height: 2rem;
+    width: 90%;
+    border: solid 1px $primary-color;
+    border-radius: $radius-md;
+  }
+}
