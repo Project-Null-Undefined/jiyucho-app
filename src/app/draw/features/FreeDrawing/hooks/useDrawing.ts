@@ -55,6 +55,7 @@ export function useDrawing() {
             })) as Coordinate[];
 
             const curveCoordinates = splitCurve(coordinates, totalBeatCount);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const interval = createInterval(curveCoordinates);
 
             setIsCurveDrawn(true);

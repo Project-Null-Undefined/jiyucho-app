@@ -11,11 +11,12 @@ function DrawPage(): ReactElement {
   const { canvasRef, isCurveDrawn } = useDrawing();
 
   const onClickComplete = () => {
+    // eslint-disable-next-line no-console
     console.log('Complete');
   };
 
   return (
-    <>
+    <div>
       <div className={styles.container}>
         <section className={styles.freeDrawingCanvasContainer}>
           <FreeDrawingCanvas canvasRef={canvasRef} />
@@ -29,7 +30,10 @@ function DrawPage(): ReactElement {
           <DrawingText text={isCurveDrawn ? 'Are these curves correct?' : 'Draw freely'} />
         </section>
       </div>
-    </>
+      <div className={styles.drawingTextContainer}>
+        <DrawingText text="Draw freely" />
+      </div>
+    </div>
   );
 }
 

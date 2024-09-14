@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import styles from './styles.module.scss';
 
-type Props = {
+interface Props {
   text: string;
-};
+}
 
 function DrawingText({ text }: Props): ReactElement {
   return (

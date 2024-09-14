@@ -9,17 +9,15 @@ import HighlightedSections from './features/RecordRhythm/components/HighlightedS
 export default function MainPage() {
   const { pushSpaceKey, progress, highlightedSections, currentHighlightStart } = useRhythmBar(10);
   return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.rhythmBarContainer}>
-          <RhythmBar pushSpaceKey={pushSpaceKey} progress={progress} currentHighlightStart={currentHighlightStart} />
-          <HighlightedSections highlightedSections={highlightedSections} />
-        </div>
-
-        <div className={styles.text}>
-          <RhythmText text={'Tap to'} fontsize={variables.fontSizeXl} />
-        </div>
+    <div className={styles.container}>
+      <div className={styles.rhythmBarContainer}>
+        <RhythmBar currentHighlightStart={currentHighlightStart} isPushedSpaceKey={pushSpaceKey} progress={progress} />
+        <HighlightedSections highlightedSections={highlightedSections} />
       </div>
-    </>
+
+      <div className={styles.text}>
+        <RhythmText fontsize={variables.fontSizeXl} text="Tap to" />
+      </div>
+    </div>
   );
 }

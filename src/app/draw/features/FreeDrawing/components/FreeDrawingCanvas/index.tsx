@@ -2,12 +2,12 @@ import { ReactElement, RefObject } from 'react';
 
 import styles from './styles.module.scss';
 
-type Props = {
+interface Props {
   canvasRef: RefObject<HTMLCanvasElement>;
-};
+}
 
 function FreeDrawingCanvas({ canvasRef }: Props): ReactElement {
-  return <canvas ref={canvasRef} className={styles.canvas} />;
+  return <canvas className={styles.canvas} ref={canvasRef} />;
 }
 
 export default FreeDrawingCanvas;

@@ -1,9 +1,6 @@
-name: Prettier
+name: CI Lint and Format
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -16,8 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: Linters
+  ci:
+    name: Lint and Format
     runs-on: ubuntu-latest
 
     steps:
@@ -27,10 +24,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          cache: 'yarn'
+          cache: yarn
 
       - name: Install dependencies
         run: yarn install
 
       - name: format
         run: yarn format:ci
+
+      - name: lint
+        run: yarn lint:ci

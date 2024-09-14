@@ -33,7 +33,7 @@ export default forwardRef(function Blocks({ onScroll }: Props, ref: ForwardedRef
   );
 
   return (
-    <section className={styles.blocks} onScroll={onScroll} ref={ref}>
+    <section className={styles.blocks} ref={ref} onScroll={onScroll}>
       <div className={styles.innner} style={style}>
         <div className={styles.beat_line_container}>
           {Array.from({ length: barCount * beatCount + 1 }).map((_, i) => (
@@ -51,10 +51,10 @@ export default forwardRef(function Blocks({ onScroll }: Props, ref: ForwardedRef
 
         {music.bars.map((bar, i) => (
           // 1小節
-          <div key={bar.id} className={styles.bar_container}>
+          <div className={styles.bar_container} key={bar.id}>
             {bar.notes.map((note) => (
               // 1音
-              <Block key={note.id} note={note} octaveRange={octaveRange} barIndex={i} />
+              <Block barIndex={i} key={note.id} note={note} octaveRange={octaveRange} />
             ))}
           </div>
         ))}

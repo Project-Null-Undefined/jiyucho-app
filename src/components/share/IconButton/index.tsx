@@ -10,7 +10,7 @@ interface Props {
 
 export default function IconButton({ onClick, icon }: Props) {
   return (
-    <button onClick={onClick} className={styles.button}>
+    <button className={styles.button} onClick={onClick}>
       {icon}
     </button>
   );

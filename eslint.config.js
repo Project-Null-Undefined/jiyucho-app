@@ -2,24 +2,42 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 
+import nextPlugin from '@next/eslint-plugin-next';
+import hooksPlugin from 'eslint-plugin-react-hooks';
+import typescriptParser from '@typescript-eslint/parser';
+
+import { fixupPluginRules } from '@eslint/compat';
+
 export default [
   {
-    ignores: ['src/types/bindings.ts', 'src-tauri/**'],
-  },
-  {
-    files: ['**/*.{ts,tsx}'],
+    ignores: ['.next/**', 'src-tauri/**'],
   },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
+    files: ['**/*.{ts,tsx}'],
     settings: {
       react: {
         version: 'detect',
       },
     },
+    languageOptions: {
+      parser: typescriptParser,
+    },
+    plugins: {
+      '@next/next': nextPlugin,
+      'react-hooks': fixupPluginRules(hooksPlugin),
+    },
     rules: {
-      'react/boolean-prop-naming': ['error', { validateNested: true }],
+      '@next/next/no-img-element': 'error',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+      'no-console': [
+        'error',
+        {
+          allow: ['warn', 'error'],
+        },
+      ],
       'react/checked-requires-onchange-or-readonly': 'error',
       'react/destructuring-assignment': ['error', 'always'],
       'react/forbid-dom-props': 'error',
@@ -47,7 +65,7 @@ export default [
       'react/jsx-no-leaked-render': ['error', { validStrategies: ['coerce', 'ternary'] }],
       'react/jsx-no-target-blank': ['error', { enforceDynamicLinks: 'always' }],
       'react/jsx-no-useless-fragment': 'error',
-      'react/jsx-one-expression-per-line': ['error', { allow: 'single-child' }],
+      'react/jsx-one-expression-per-line': 'off',
       'react/jsx-props-no-multi-spaces': 'error',
       'react/jsx-sort-props': ['error', { callbacksLast: true, shorthandFirst: true, ignoreCase: true }],
       'react/jsx-wrap-multilines': [
@@ -94,6 +112,7 @@ export default [
       'react/state-in-constructor': ['error', 'always'],
       'react/static-property-placement': ['error', 'property assignment'],
       'react/react-in-jsx-scope': 'off',
+      'react/boolean-prop-naming': 'off',
     },
   },
 ];
