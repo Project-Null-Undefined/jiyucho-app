@@ -31,6 +31,15 @@
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
     "@next/eslint-plugin-next": "^14.2.11",
+    "@chromatic-com/storybook": "^1.9.0",
+    "@storybook/addon-essentials": "^8.3.0",
+    "@storybook/addon-interactions": "^8.3.0",
+    "@storybook/addon-links": "^8.3.0",
+    "@storybook/addon-onboarding": "^8.3.0",
+    "@storybook/blocks": "^8.3.0",
+    "@storybook/nextjs": "^8.3.0",
+    "@storybook/react": "^8.3.0",
+    "@storybook/test": "^8.3.0",
     "@tauri-apps/cli": ">=2.0.0-rc.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -39,6 +48,7 @@
     "eslint-config-next": "14.2.11",
     "eslint-plugin-react": "^7.36.1",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-storybook": "^0.8.0",
     "prettier": "^3.3.3",
     "sass": "^1.78.0",
     "scss-reset": "^1.4.2",
@@ -46,5 +56,10 @@
     "typed-scss-modules": "^8.0.1",
     "typescript": "^5.2.2",
     "typescript-eslint": "^8.5.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }

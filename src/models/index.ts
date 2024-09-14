@@ -94,22 +94,28 @@ export class DiatonicChord extends Note {
     const scale = this.scale;
     const type = this.getType();
 
-    return `${scale}${type.charAt(0).toUpperCase}${type.slice(1)}`;
+    return `${scale}${type.charAt(0)}${type.slice(1)}`;
   }
 }
 
 // 1小節
 export class Bar extends Identifiable {
   declare notes: Note[];
-  declare chord: DiatonicChord;
+  declare chordIndex: number;
+  declare chords: DiatonicChord[];
 
-  constructor(props: { notes: Note[]; chord: DiatonicChord }) {
-    const { notes, chord } = props;
+  constructor(props: { notes: Note[]; chordIndex?: number; chords: DiatonicChord[] }) {
+    const { notes, chordIndex = -1, chords = [] } = props;
 
     super();
 
     this.notes = notes;
-    this.chord = chord;
+    this.chordIndex = chordIndex;
+    this.chords = chords;
+  }
+
+  get chord(): DiatonicChord | undefined {
+    return this.chords[this.chordIndex];
   }
 }
 
