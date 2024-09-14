@@ -11,30 +11,23 @@ function DrawPage(): ReactElement {
   const { canvasRef, isCurveDrawn } = useDrawing();
 
   const onClickComplete = () => {
-    console.log('Clicked');
-  };
-
-  const onClickRewrite = () => {
-    console.log('Clicked');
+    console.log('Complete');
   };
 
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.freeDrawingCanvasContainer}>
+        <section className={styles.freeDrawingCanvasContainer}>
           <FreeDrawingCanvas canvasRef={canvasRef} />
-        </div>
-        <div className={styles.confirmButtonContainer}>
-          <ConfirmButton disabled={!isCurveDrawn} onClick={onClickRewrite}>
-            NO
-          </ConfirmButton>
+        </section>
+        <section className={styles.confirmButtonContainer}>
           <ConfirmButton disabled={!isCurveDrawn} onClick={onClickComplete}>
             OK
           </ConfirmButton>
-        </div>
-        <div className={styles.drawingTextContainer}>
+        </section>
+        <section className={styles.drawingTextContainer}>
           <DrawingText text={isCurveDrawn ? 'Are these curves correct?' : 'Draw freely'} />
-        </div>
+        </section>
       </div>
     </>
   );
