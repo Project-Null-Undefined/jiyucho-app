@@ -65,7 +65,7 @@ export default [
       'react/jsx-no-leaked-render': ['error', { validStrategies: ['coerce', 'ternary'] }],
       'react/jsx-no-target-blank': ['error', { enforceDynamicLinks: 'always' }],
       'react/jsx-no-useless-fragment': 'error',
-      'react/jsx-one-expression-per-line': ['error', { allow: 'single-child' }],
+      'react/jsx-one-expression-per-line': 'off',
       'react/jsx-props-no-multi-spaces': 'error',
       'react/jsx-sort-props': ['error', { callbacksLast: true, shorthandFirst: true, ignoreCase: true }],
       'react/jsx-wrap-multilines': [
@@ -113,7 +113,6 @@ export default [
       'react/static-property-placement': ['error', 'property assignment'],
       'react/react-in-jsx-scope': 'off',
       'react/boolean-prop-naming': 'off',
-      'eslintreact/jsx-one-expression-per-line': 'off',
     },
   },
 ];
