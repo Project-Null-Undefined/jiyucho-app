@@ -33,7 +33,10 @@ interface PianoKeyCProps {
 function PianoKeyC({ octave }: PianoKeyCProps) {
   return (
     <div className={styles.key_c}>
-      <span>C{octave}</span>
+      <span>
+C
+{octave}
+</span>
     </div>
   );
 }

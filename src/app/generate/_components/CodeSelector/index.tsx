@@ -27,7 +27,7 @@ export default forwardRef(function CodeSelector({ onScroll }: Props, ref: Forwar
   );
 
   return (
-    <section className={styles.code_selector_section} style={style} onScroll={onScroll} ref={ref}>
+    <section className={styles.code_selector_section} ref={ref} style={style} onScroll={onScroll}>
       {Array.from({ length: barCount }).map((_, i) => {
         const bar = music.bars.at(i);
         if (bar) return <Select bar={bar} key={bar.id} />;
