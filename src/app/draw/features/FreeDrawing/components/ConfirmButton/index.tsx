@@ -2,11 +2,11 @@ import { ReactElement } from 'react';
 
 import styles from './styles.module.scss';
 
-type Props = {
+interface Props {
   disabled: boolean;
   children: string;
   onClick: () => void;
-};
+}
 
 function ConfirmButton({ disabled, children, onClick }: Props): ReactElement {
   return (
