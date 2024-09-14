@@ -113,6 +113,7 @@ export default [
       'react/state-in-constructor': ['error', 'always'],
       'react/static-property-placement': ['error', 'property assignment'],
       'react/react-in-jsx-scope': 'off',
+      'eslintreact/jsx-one-expression-per-line': 'off',
     },
   },
 ];
