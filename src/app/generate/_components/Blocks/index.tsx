@@ -33,7 +33,7 @@ export default forwardRef(function Blocks({ onScroll }: Props, ref: ForwardedRef
   );
 
   return (
-    <section className={styles.blocks} ref={ref} onScroll={onScroll}>
+    <section className={styles.blocks} onScroll={onScroll} ref={ref}>
       <div className={styles.innner} style={style}>
         <div className={styles.beat_line_container}>
           {Array.from({ length: barCount * beatCount + 1 }).map((_, i) => (
