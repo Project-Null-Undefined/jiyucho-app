@@ -61,6 +61,7 @@
     "typed-scss-modules": "^8.0.1",
     "typescript": "^5.2.2",
     "typescript-eslint": "^8.5.0",
+    "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.1.1"
   },
   "eslintConfig": {
