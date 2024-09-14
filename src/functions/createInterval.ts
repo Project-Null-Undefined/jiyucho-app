@@ -3,7 +3,9 @@ import { Coordinate } from '@/types/draw';
 import { HALF_NOTE, SCALE_NUM, WHOLE_NOTE } from '@/const/draw';
 
 export function createInterval(curveCoordinates: Coordinate[]): Interval[] {
-  const yBase = curveCoordinates[0].y;
+  const yBase = curveCoordinates.at(0)?.y;
+  if (yBase == undefined) return [];
+
   const yMax = Math.max(...curveCoordinates.map((c) => c.y - yBase));
   const yMin = Math.min(...curveCoordinates.map((c) => c.y - yBase));
   const yMaxAbs = Math.max(Math.abs(yMax), Math.abs(yMin));
