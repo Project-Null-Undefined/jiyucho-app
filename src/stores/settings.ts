@@ -11,3 +11,12 @@ export const barCountAtom = atom<Settings['barCount']>(8);
 export const beatCountAtom = atom<Settings['beatCount']>(4);
 // 最小の音符の長さ (1/N 拍)
 export const minNoteDurationAtom = atom<Settings['minNoteDuration']>(4);
+
+// 設定 (Read Only)
+export const settingsAtom = atom<Settings>((get) => ({
+  bpm: get(bpnAtom),
+  octaveRange: get(octaveRangeAtom),
+  barCount: get(barCountAtom),
+  beatCount: get(beatCountAtom),
+  minNoteDuration: get(minNoteDurationAtom),
+}));

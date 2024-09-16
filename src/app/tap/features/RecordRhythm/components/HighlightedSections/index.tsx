@@ -1,4 +1,4 @@
-import { HighlightedSection } from '@/app/tap/features/RecordRhythm/types';
+import { HighlightedSection } from '@/types/tap';
 import styles from './style.module.scss';
 
 interface HighlightedSectionsProps {

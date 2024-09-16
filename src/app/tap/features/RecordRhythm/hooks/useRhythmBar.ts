@@ -1,19 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import { highlightMap2Beat } from '../functions/highlightMap2Beat';
-import { useAtomValue } from 'jotai';
-import { barCountAtom, beatCountAtom, minNoteDurationAtom } from '@/stores/settings';
+import { useAtom } from 'jotai';
+import { highlightedSectionsAtom } from '@/stores/tap';
 
 export function useRhythmBar(duration: number) {
-  const barCount = useAtomValue(barCountAtom); // 小節数
-  const beatCount = useAtomValue(beatCountAtom); // 拍子
-  const minNoteDuration = useAtomValue(minNoteDurationAtom); // 最小音符の長さ
-
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [highlightedSections, setHighlightedSections] = useState<{ start: number; end: number }[]>([]);
+  const [highlightedSections, setHighlightedSections] = useAtom(highlightedSectionsAtom);
   const [currentHighlightStart, setCurrentHighlightStart] = useState<number | null>(null);
   const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
-  const [isFinished, setIsFinished] = useState(false);
 
   const handleKeyDownSpace = useCallback(
     (event: KeyboardEvent) => {
@@ -75,16 +69,7 @@ export function useRhythmBar(duration: number) {
         setCurrentHighlightStart(null);
       }
     }
-    if (progress >= 100 && !pushSpaceKey) {
-      setIsFinished(true);
-    }
   }, [progress, pushSpaceKey]);
-
-  useEffect(() => {
-    const length = barCount * beatCount * minNoteDuration;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const Beat = highlightMap2Beat(highlightedSections, length);
-  }, [isFinished]);
 
   return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted };
 }
