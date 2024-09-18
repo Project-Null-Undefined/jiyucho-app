@@ -1,4 +1,4 @@
-import { BaseScale } from '@/types';
+import { BaseScale, ScaleType } from '@/types';
 
 // 音階
 export const BASE_SCALES = [
@@ -59,3 +59,19 @@ export enum Range {
   MAX,
 }
 export const { MIN, MAX } = Range;
+
+// スケール
+export const SCALE_TYPES = [
+  {
+    type: 'major',
+    intervals: [2, 2, 1, 2, 2, 2, 1],
+  },
+  {
+    type: 'minor',
+    intervals: [2, 1, 2, 2, 1, 2, 2],
+  },
+  {
+    type: 'diminished',
+    intervals: [2, 1, 2, 1, 2, 1, 2],
+  },
+] as const satisfies ScaleType[];

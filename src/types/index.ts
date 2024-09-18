@@ -33,3 +33,12 @@ export type ScaleInterval = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 // リズム (8小節の場合は length = 8小節 * 4拍 * 4 = 128)
 export type Rhythm = Beat[];
+
+// ルート音
+export type RootNote = Pick<Note, 'octave' | 'scale'>;
+
+// スケールタイプ
+export interface ScaleType {
+  type: string;
+  intervals: Interval[];
+}

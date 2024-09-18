@@ -75,6 +75,13 @@ export class Note extends Beat {
   public getName(): string {
     return `${this.scale}${this.octave}`;
   }
+
+  /**
+   * 音階のindexを取得
+   */
+  public getScaleIndex(): number {
+    return SCALES.indexOf(this.scale);
+  }
 }
 
 // コード
@@ -95,6 +102,26 @@ export class DiatonicChord extends Note {
     const type = this.getType();
 
     return `${scale}${type.charAt(0)}${type.slice(1)}`;
+  }
+
+  /**
+   * コードのNoteを取得
+   */
+  public getNotes(): Note[] {
+    const intervals = [0, 2, 4];
+
+    return intervals.map((interval) => {
+      const scaleIndex = (this.getScaleIndex() + interval) % SCALES.length;
+      const scale = SCALES[scaleIndex];
+      const octave = scaleIndex < this.getScaleIndex() ? this.octave + 1 : this.octave;
+
+      return new Note({
+        scale,
+        octave,
+        start: this.start,
+        duration: this.duration,
+      });
+    });
   }
 }
 
