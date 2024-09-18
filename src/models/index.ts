@@ -52,7 +52,7 @@ export class Note extends Beat {
     const colEnd = this.start + this.duration + 1;
 
     // 小節内の音階の位置
-    const scalePosition = SCALES.findIndex((s) => s === this.scale) + 1;
+    const scalePosition = this.getScaleIndex() + 1;
     // 相対的な小節の位置
     const relativeBarPosition = this.octave - octaveRange[MIN];
     // 小節の位置
@@ -81,6 +81,15 @@ export class Note extends Beat {
    */
   public getScaleIndex(): number {
     return SCALES.indexOf(this.scale);
+  }
+
+  /**
+   * 音階のindexを取得
+   *
+   * @param scale 取得したい音階
+   */
+  public static getScaleIndex(scale: Scale): number {
+    return SCALES.indexOf(scale);
   }
 }
 

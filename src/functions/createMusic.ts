@@ -17,29 +17,33 @@ export function createMusic(
 ): Music {
   const { barCount, beatCount, minNoteDuration } = settings;
 
-  const bars = Array.from({ length: barCount }).map((_, barIndex) => {
-    // 1小節の音符の先頭と末尾
-    const beatStart = barIndex * beatCount;
-    const beatEnd = (barIndex + 1) * beatCount;
+  const initNotes: Note[] = [];
+  const notes = beats.reduce((notes, beat) => {
+    const { start, duration } = beat;
+    const end = start + duration;
 
-    // 1小節の音程
-    const barIntervals = intervals.slice(beatStart, beatEnd);
-    // 1小節の拍子
-    const barBeats = beats.slice(beatStart, beatEnd);
+    // start ~ end の間のintervalを取得
+    const beatIntervals = intervals.slice(start, end);
+    const beatNotes = createNotes(rootNote, beatIntervals, beat);
 
-    const notes = createNotes(rootNote, barIntervals, barBeats);
-    const firstNote = notes.at(0);
-    if (firstNote === undefined) {
-      return new Bar({
-        notes,
-        chordIndex: 0,
-        chords: [],
-      });
-    }
-    const chords = createDiatonicChordCandidates(rootNote, scaleType, firstNote, beatCount * minNoteDuration);
+    return [...notes, ...beatNotes];
+  }, initNotes);
+
+  const bars: Bar[] = Array.from({ length: barCount }).map((_, i) => {
+    const start = i * beatCount * minNoteDuration;
+    const end = start + beatCount * minNoteDuration;
+
+    const barNotes = notes.filter((note) => start <= note.start && note.start < end);
+    barNotes.forEach((note) => (note.start -= start));
+
+    const firstNote = barNotes.at(0);
+    const chords =
+      firstNote === undefined
+        ? []
+        : createDiatonicChordCandidates(rootNote, scaleType, firstNote, beatCount * minNoteDuration);
 
     return new Bar({
-      notes,
+      notes: barNotes,
       chordIndex: 0,
       chords,
     });
@@ -53,20 +57,32 @@ export function createMusic(
 /**
  * 音符を生成する
  */
-export function createNotes(rootNote: RootNote, intervals: Interval[], beats: Beat[]): Note[] {
-  return beats.map((beat) => {
-    const intervalIndex = beat.start;
+export function createNotes(rootNote: RootNote, intervals: Interval[], beat: Beat): Note[] {
+  const initNotes: Note[] = [];
+  return intervals.reduce((notes, interval, i) => {
+    const prevNote = notes.at(notes.length - 1);
 
-    const octave = rootNote.octave + (intervals[intervalIndex] % 12);
-    const scale = SCALES[intervals[intervalIndex] % SCALES.length];
+    const rootScaleIndex = Note.getScaleIndex(rootNote.scale);
+    const scaleIndex = (rootScaleIndex + interval) % SCALES.length;
+    const scale = SCALES[scaleIndex];
 
-    return new Note({
-      octave,
+    const octave = rootNote.octave + Math.floor(interval / SCALES.length);
+
+    // 前の音符と同じ音なら音を繋げる
+    if (prevNote?.scale === scale && prevNote?.octave === octave) {
+      prevNote.duration += 1;
+      return [...notes.slice(0, -1), prevNote];
+    }
+
+    const note = new Note({
+      start: beat.start + i,
+      duration: 1,
       scale,
-      start: beat.start,
-      duration: beat.duration,
+      octave,
     });
-  });
+
+    return [...notes, note];
+  }, initNotes);
 }
 
 /**

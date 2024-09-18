@@ -17,10 +17,10 @@ export const scaleTypeAtom = atom<ScaleType>((get) => {
 
 // Root Note (Read & Write)
 export const rootNoteAtom = atom<RootNote>((get) => {
-  const [octaveMin] = get(octaveRangeAtom);
+  const [_octaveMin, octaveMax] = get(octaveRangeAtom);
 
   return {
-    octave: octaveMin,
+    octave: octaveMax - 1,
     scale: SCALES[Math.floor(SCALES.length * Math.random())],
   };
 });
