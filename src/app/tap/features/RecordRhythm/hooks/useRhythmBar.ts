@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import { highlightedSectionsAtom } from '@/stores/tap';
-import { useRouter } from 'next/navigation';
 
 export function useRhythmBar(duration: number) {
   const [pushSpaceKey, setPushSpaceKey] = useState(false);
@@ -9,7 +8,7 @@ export function useRhythmBar(duration: number) {
   const [highlightedSections, setHighlightedSections] = useAtom(highlightedSectionsAtom);
   const [currentHighlightStart, setCurrentHighlightStart] = useState<number | null>(null);
   const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
-  const router = useRouter();
+  const [isFinished, setIsFinished] = useState(false); // 進行状況の開始フラグ
 
   const handleKeyDownSpace = useCallback(
     (event: KeyboardEvent) => {
@@ -72,9 +71,18 @@ export function useRhythmBar(duration: number) {
       }
     }
 
-    // 進行状況が100%になったら画面遷移
-    if (progress >= 100) router.push('/generate');
+    if (progress >= 100) {
+      setIsFinished(true);
+    }
   }, [progress, pushSpaceKey]);
 
-  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted };
+  const reset = useCallback(() => {
+    setProgress(0); // 進行状況のリセット
+    setHighlightedSections([]); // ハイライトセクションのリセット
+    setIsStarted(false); // 開始状態のリセット
+    setIsFinished(false); // 終了状態のリセット
+    setCurrentHighlightStart(null); // ハイライト開始位置のリセット
+  }, [setProgress, setHighlightedSections, setIsStarted, setIsFinished, setCurrentHighlightStart]);
+
+  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted, isFinished, reset };
 }
