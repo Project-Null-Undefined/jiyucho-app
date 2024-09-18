@@ -13,6 +13,15 @@
 }
 
 .text {
-  position: absolute;
-  bottom: 15%;
+  justify-content: center;
+  align-items: center;
+  margin-top: $xl;
+  margin-bottom: $xl;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $xl;
 }
