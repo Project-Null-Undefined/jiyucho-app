@@ -7,6 +7,8 @@ import DrawingText from './features/FreeDrawing/components/DrawingText';
 import { useDrawing } from './features/FreeDrawing/hooks/useDrawing';
 import ConfirmButton from './features/FreeDrawing/components/ConfirmButton';
 import { useRouter } from 'next/navigation';
+import { useAtomValue } from 'jotai';
+import { intervalsAtom } from '@/stores/draw';
 
 function DrawPage(): ReactElement {
   const { canvasRef, isCurveDrawn } = useDrawing();
@@ -15,6 +17,7 @@ function DrawPage(): ReactElement {
   const onClickComplete = () => {
     router.push('/tap');
   };
+  const _ = useAtomValue(intervalsAtom);
 
   return (
     <div>
