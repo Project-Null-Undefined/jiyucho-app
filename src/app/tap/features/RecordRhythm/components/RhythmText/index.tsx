@@ -13,7 +13,7 @@ export default function RhythmText({ text, fontsize }: RhythmTextProps) {
         fontSize: fontsize,
       }}
     >
-      <text>{text}</text>
+      <p>{text}</p>
       <SpaceKeyIcon fontsize={fontsize} />
     </div>
   );

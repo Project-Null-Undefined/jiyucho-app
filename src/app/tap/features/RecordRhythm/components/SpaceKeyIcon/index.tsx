@@ -10,7 +10,7 @@ export default function SpaceKeyIcon({ fontsize }: SpaceKeyIconProps) {
         fontSize: fontsize,
       }}
     >
-      <text>SPACE</text>
+      <p>SPACE</p>
     </div>
   );
 }
