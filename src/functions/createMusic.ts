@@ -28,7 +28,15 @@ export function createMusic(
     const barBeats = beats.slice(beatStart, beatEnd);
 
     const notes = createNotes(rootNote, barIntervals, barBeats);
-    const chords = createDiatonicChordCandidates(rootNote, scaleType, notes[0], beatCount * minNoteDuration);
+    const firstNote = notes.at(0);
+    if (firstNote === undefined) {
+      return new Bar({
+        notes,
+        chordIndex: 0,
+        chords: [],
+      });
+    }
+    const chords = createDiatonicChordCandidates(rootNote, scaleType, firstNote, beatCount * minNoteDuration);
 
     return new Bar({
       notes,
