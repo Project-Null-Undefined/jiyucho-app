@@ -52,7 +52,7 @@ export class Note extends Beat {
     const colEnd = this.start + this.duration + 1;
 
     // 小節内の音階の位置
-    const scalePosition = SCALES.findIndex((s) => s === this.scale) + 1;
+    const scalePosition = this.getScaleIndex() + 1;
     // 相対的な小節の位置
     const relativeBarPosition = this.octave - octaveRange[MIN];
     // 小節の位置
@@ -75,6 +75,22 @@ export class Note extends Beat {
   public getName(): string {
     return `${this.scale}${this.octave}`;
   }
+
+  /**
+   * 音階のindexを取得
+   */
+  public getScaleIndex(): number {
+    return SCALES.indexOf(this.scale);
+  }
+
+  /**
+   * 音階のindexを取得
+   *
+   * @param scale 取得したい音階
+   */
+  public static getScaleIndex(scale: Scale): number {
+    return SCALES.indexOf(scale);
+  }
 }
 
 // コード
@@ -95,6 +111,26 @@ export class DiatonicChord extends Note {
     const type = this.getType();
 
     return `${scale}${type.charAt(0)}${type.slice(1)}`;
+  }
+
+  /**
+   * コードのNoteを取得
+   */
+  public getNotes(): Note[] {
+    const intervals = [0, 2, 4];
+
+    return intervals.map((interval) => {
+      const scaleIndex = (this.getScaleIndex() + interval) % SCALES.length;
+      const scale = SCALES[scaleIndex];
+      const octave = scaleIndex < this.getScaleIndex() ? this.octave + 1 : this.octave;
+
+      return new Note({
+        scale,
+        octave,
+        start: this.start,
+        duration: this.duration,
+      });
+    });
   }
 }
 

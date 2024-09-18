@@ -87,6 +87,15 @@ export default [
       'react/no-object-type-as-default-prop': 'error',
       'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
       'react/no-unused-class-component-methods': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+        },
+      ],
       'react/prefer-exact-props': 'error',
       'react/sort-comp': [
         'error',

@@ -6,14 +6,14 @@ import { barCountAtom, octaveRangeAtom, beatCountAtom, minNoteDurationAtom } fro
 import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 import Block from './Block';
 import { MAX, MIN } from '@/const';
-import { musicAtom } from '@/stores/music';
+import { Music } from '@/models';
 
 interface Props {
+  music: Music;
   onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
 }
 
-export default forwardRef(function Blocks({ onScroll }: Props, ref: ForwardedRef<HTMLElement>) {
-  const music = useAtomValue(musicAtom); // 音楽データ
+export default forwardRef(function Blocks({ music, onScroll }: Props, ref: ForwardedRef<HTMLElement>) {
   const octaveRange = useAtomValue(octaveRangeAtom); // 表示する音域
   const barCount = useAtomValue(barCountAtom); // 小節数
   const beatCount = useAtomValue(beatCountAtom); // 拍子
