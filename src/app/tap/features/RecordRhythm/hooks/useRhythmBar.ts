@@ -10,7 +10,6 @@ export function useRhythmBar(duration: number) {
   const [isStarted, setIsStarted] = useState(false); // 進行状況の開始フラグ
   const [isFinished, setIsFinished] = useState(false); // 進行状況の開始フラグ
 
-
   const handleKeyDownSpace = useCallback(
     (event: KeyboardEvent) => {
       if (event.code === 'Space') {
@@ -72,9 +71,9 @@ export function useRhythmBar(duration: number) {
       }
     }
 
-    if (progress >= 100){
-      setIsFinished(true)
-    };
+    if (progress >= 100) {
+      setIsFinished(true);
+    }
   }, [progress, pushSpaceKey]);
 
   const reset = useCallback(() => {
@@ -85,5 +84,5 @@ export function useRhythmBar(duration: number) {
     setCurrentHighlightStart(null); // ハイライト開始位置のリセット
   }, [setProgress, setHighlightedSections, setIsStarted, setIsFinished, setCurrentHighlightStart]);
 
-  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted ,isFinished,reset};
+  return { pushSpaceKey, progress, highlightedSections, currentHighlightStart, isStarted, isFinished, reset };
 }
