@@ -6,13 +6,14 @@ import styles from './styles.module.scss';
 import DrawingText from './features/FreeDrawing/components/DrawingText';
 import { useDrawing } from './features/FreeDrawing/hooks/useDrawing';
 import ConfirmButton from './features/FreeDrawing/components/ConfirmButton';
+import { useRouter } from 'next/navigation';
 
 function DrawPage(): ReactElement {
   const { canvasRef, isCurveDrawn } = useDrawing();
+  const router = useRouter();
 
   const onClickComplete = () => {
-    // eslint-disable-next-line no-console
-    console.log('Complete');
+    router.push('/tap');
   };
 
   return (
