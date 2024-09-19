@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import paper from 'paper';
 import { useSetAtom } from 'jotai';
 import styles from '@/styles/colors.module.scss';
-import { Coordinate } from '@/types/draw';
 import { curveCoordinatesAtom } from '@/stores/draw';
 
 export function useDrawing() {
@@ -45,12 +44,7 @@ export function useDrawing() {
           if (path) {
             path.smooth();
 
-            const coordinates = path.segments.map((segment) => ({
-              x: segment.point.x,
-              y: segment.point.y,
-            })) as Coordinate[];
-
-            setCurveCoordinates(coordinates);
+            setCurveCoordinates(path.segments);
             setIsCurveDrawn(true);
           }
         };

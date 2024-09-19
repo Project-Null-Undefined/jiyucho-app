@@ -4,9 +4,6 @@ import { Interval, RootNote, ScaleType, Settings } from '@/types';
 
 /**
  * Interval と beat から音楽データを生成する
- *
- * @param intervals 音程
- * @param beats 拍子
  */
 export function createMusic(
   rootNote: RootNote,
@@ -16,7 +13,6 @@ export function createMusic(
   settings: Settings,
 ): Music {
   const { barCount, beatCount, minNoteDuration } = settings;
-
   const initNotes: Note[] = [];
   const notes = beats.reduce((notes, beat) => {
     const { start, duration } = beat;
@@ -63,10 +59,13 @@ export function createNotes(rootNote: RootNote, intervals: Interval[], beat: Bea
     const prevNote = notes.at(notes.length - 1);
 
     const rootScaleIndex = Note.getScaleIndex(rootNote.scale);
-    const scaleIndex = (rootScaleIndex + interval) % SCALES.length;
+    const scaleIndex =
+      rootScaleIndex + interval > 0
+        ? (rootScaleIndex + interval) % SCALES.length
+        : ((rootScaleIndex + interval) % SCALES.length) + SCALES.length - 1;
     const scale = SCALES[scaleIndex];
 
-    const octave = rootNote.octave + Math.floor(interval / SCALES.length);
+    const octave = rootNote.octave + Math.floor((rootScaleIndex + interval) / SCALES.length);
 
     // 前の音符と同じ音なら音を繋げる
     if (prevNote?.scale === scale && prevNote?.octave === octave) {
