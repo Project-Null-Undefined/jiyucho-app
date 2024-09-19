@@ -1,6 +1,7 @@
 import { musicAtom } from '@/stores/music';
+import { playbackPositionAtom } from '@/stores/playbackPosition';
 import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom } from '@/stores/settings';
-import { atom, useAtom, useAtomValue } from 'jotai';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useCallback, useRef } from 'react';
 
 const isPlayingAtom = atom(false);
@@ -12,6 +13,7 @@ export default function usePlayer() {
   const playIntervalRef = useRef<NodeJS.Timeout>();
   const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
 
+  const setPlaybackPosition = useSetAtom(playbackPositionAtom);
   const bpm = useAtomValue(bpnAtom);
   const barCount = useAtomValue(barCountAtom);
   const beatCount = useAtomValue(beatCountAtom);
@@ -61,6 +63,7 @@ export default function usePlayer() {
 
       if (next <= finalBeat) {
         playbackPositionRef.current = next;
+        setPlaybackPosition(next);
       } else {
         clearInterval(interval);
         setPlayinterval(undefined);
@@ -78,5 +81,5 @@ export default function usePlayer() {
     setPlayinterval(undefined);
   }, []);
 
-  return { isPlaying, play, pause, playbackPosition: playbackPositionRef.current };
+  return { isPlaying, play, pause };
 }

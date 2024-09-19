@@ -7,6 +7,8 @@ import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 import Block from './Block';
 import { MAX, MIN } from '@/const';
 import { Music } from '@/models';
+import { playbackPositionAtom } from '@/stores/playbackPosition';
+import SeekBar from './SeekBar';
 
 interface Props {
   music: Music;
@@ -14,6 +16,8 @@ interface Props {
 }
 
 export default forwardRef(function Blocks({ music, onScroll }: Props, ref: ForwardedRef<HTMLElement>) {
+  const playbackPosition = useAtomValue(playbackPositionAtom); // 再生位置
+
   const octaveRange = useAtomValue(octaveRangeAtom); // 表示する音域
   const barCount = useAtomValue(barCountAtom); // 小節数
   const beatCount = useAtomValue(beatCountAtom); // 拍子
@@ -59,6 +63,8 @@ export default forwardRef(function Blocks({ music, onScroll }: Props, ref: Forwa
             ))}
           </div>
         ))}
+
+        <SeekBar playbackPosition={playbackPosition} />
       </div>
     </section>
   );
