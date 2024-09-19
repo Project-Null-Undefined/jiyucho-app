@@ -12,6 +12,13 @@ class Identifiable {
   get id(): string {
     return this._id;
   }
+
+  /**
+   * IDを設定
+   */
+  set id(id: string) {
+    this._id = id;
+  }
 }
 
 // 1拍
@@ -38,13 +45,17 @@ export class Note extends Beat {
   declare octave: number;
   declare scale: Scale;
 
-  constructor(props: { scale: Scale; octave: number; start: number; duration: number }) {
+  constructor(props: { scale: Scale; octave: number; start: number; duration: number; id?: string }) {
     const { scale, octave, start, duration } = props;
 
     super(start, duration);
 
     this.octave = octave;
     this.scale = scale;
+
+    if (props.id) {
+      this.id = props.id;
+    }
   }
 
   /**
@@ -147,6 +158,7 @@ export class DiatonicChord extends Note {
         octave,
         start: this.start,
         duration: this.duration,
+        id: `${this.id}-${this.octave}-${scaleIndex}`,
       });
     });
   }

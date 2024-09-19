@@ -4,6 +4,8 @@ import { playbackPositionAtom } from '@/stores/playbackPosition';
 import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom } from '@/stores/settings';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useCallback, useRef, useState } from 'react';
+import { SplendidGrandPiano } from 'smplr';
+import { AudioContext as StandardizedAudioContext } from 'standardized-audio-context';
 
 interface PlayingNote {
   [key: string]: () => void;
@@ -14,7 +16,9 @@ const isPlayingAtom = atom(false);
 export default function usePlayer() {
   const music = useAtomValue(musicAtom);
 
-  const [context] = useState<AudioContext>(() => new (window.AudioContext || window.webkitAudioContext)());
+  const [context] = useState<AudioContext>(() => new StandardizedAudioContext() as unknown as AudioContext);
+  const instrument = new SplendidGrandPiano(context, {});
+
   const playbackPositionRef = useRef(0);
   const playIntervalRef = useRef<NodeJS.Timeout>();
   const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
@@ -32,33 +36,16 @@ export default function usePlayer() {
   }, []);
 
   const playNote = useCallback((note: Note, playingBeat: number) => {
-    console.log(note.getName());
-    const frequency = note.getFrequency();
     const durationDiff = playingBeat - note.start;
     const durationSec = (note.duration - durationDiff) * (60 / bpm);
 
-    const oscillator = context.createOscillator();
-    const gainNode = context.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(context.destination);
-
-    oscillator.type = 'square';
-    oscillator.frequency.value = frequency;
-
-    oscillator.start();
-    gainNode.gain.setValueAtTime(1, context.currentTime);
-
-    const stopTime = context.currentTime + durationSec;
-    gainNode.gain.exponentialRampToValueAtTime(0.001, stopTime);
-    oscillator.stop(stopTime);
+    instrument.start({ note: note.getName(), velocity: 80, time: 0, duration: durationSec });
 
     setTimeout(() => {
       delete playNotesRef.current[note.id];
     }, durationSec * 1000);
 
-    const stop = () => oscillator.stop();
-    return stop;
+    return () => {};
   }, []);
 
   const playMusic = useCallback((position: number) => {
