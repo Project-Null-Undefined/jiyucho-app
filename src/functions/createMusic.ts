@@ -20,7 +20,7 @@ export function createMusic(
 
     // start ~ end の間のintervalを取得
     const beatIntervals = intervals.slice(start, end);
-    const beatNotes = createNotes(rootNote, beatIntervals, beat);
+    const beatNotes = createNotes(rootNote, scaleType, beatIntervals, beat);
 
     return [...notes, ...beatNotes];
   }, initNotes);
@@ -53,7 +53,7 @@ export function createMusic(
 /**
  * 音符を生成する
  */
-export function createNotes(rootNote: RootNote, intervals: Interval[], beat: Beat): Note[] {
+export function createNotes(rootNote: RootNote, scaleType: ScaleType, intervals: Interval[], beat: Beat): Note[] {
   const initNotes: Note[] = [];
   return intervals.reduce((notes, interval, i) => {
     const prevNote = notes.at(notes.length - 1);
@@ -63,7 +63,19 @@ export function createNotes(rootNote: RootNote, intervals: Interval[], beat: Bea
       rootScaleIndex + interval > 0
         ? (rootScaleIndex + interval) % SCALES.length
         : ((rootScaleIndex + interval) % SCALES.length) + SCALES.length - 1;
-    const scale = SCALES[scaleIndex];
+
+    const intervalsByBase = scaleType.intervals.reduce(
+      (acc, cur) => {
+        const prev = acc.at(-1) ?? Note.getScaleIndex(rootNote.scale);
+        return [...acc, prev + cur];
+      },
+      [0],
+    );
+    const pickedNotes = SCALES.filter((_, i) => intervalsByBase.includes(i % SCALES.length));
+
+    const scale = pickedNotes.includes(SCALES[scaleIndex])
+      ? SCALES[scaleIndex]
+      : SCALES[(scaleIndex + 1) % SCALES.length];
 
     const octave = rootNote.octave + Math.floor((rootScaleIndex + interval) / SCALES.length);
 

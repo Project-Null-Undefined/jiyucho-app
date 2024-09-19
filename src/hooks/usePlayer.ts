@@ -1,7 +1,7 @@
 import { Note } from '@/models';
 import { musicAtom, rootNoteAtom, scaleTypeAtom } from '@/stores/music';
 import { playbackPositionAtom } from '@/stores/playbackPosition';
-import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom, settingsAtom } from '@/stores/settings';
+import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom } from '@/stores/settings';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useCallback, useRef, useState } from 'react';
 import { SplendidGrandPiano } from 'smplr';
