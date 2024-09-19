@@ -81,5 +81,43 @@ export default function usePlayer() {
     setPlayinterval(undefined);
   }, []);
 
-  return { isPlaying, play, pause };
+  /**
+   * 次の小節の先頭に移動
+   */
+  const nextBar = useCallback(() => {
+    const diff = playbackPositionRef.current % (beatCount * minNoteDuration);
+    const next = playbackPositionRef.current + (beatCount * minNoteDuration - diff);
+    playbackPositionRef.current = next;
+    setPlaybackPosition(next);
+  }, [beatCount, minNoteDuration]);
+
+  /**
+   * 前の小節の先頭に移動
+   */
+  const prevBar = useCallback(() => {
+    playbackPositionRef.current -= 1;
+    const diff = playbackPositionRef.current % (beatCount * minNoteDuration);
+    const prev = playbackPositionRef.current - diff;
+    playbackPositionRef.current = prev;
+    setPlaybackPosition(prev);
+  }, [beatCount, minNoteDuration]);
+
+  /**
+   * 最初へ
+   */
+  const rewind = useCallback(() => {
+    playbackPositionRef.current = 0;
+    setPlaybackPosition(0);
+  }, []);
+
+  /**
+   * 最後へ
+   */
+  const forward = useCallback(() => {
+    const finalBeat = barCount * beatCount * minNoteDuration;
+    playbackPositionRef.current = finalBeat;
+    setPlaybackPosition(finalBeat);
+  }, [barCount, beatCount, minNoteDuration]);
+
+  return { isPlaying, play, pause, nextBar, prevBar, rewind, forward };
 }
