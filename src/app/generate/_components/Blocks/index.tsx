@@ -10,6 +10,7 @@ import { Music } from '@/models';
 import { playbackPositionAtom } from '@/stores/playbackPosition';
 import SeekBar from './SeekBar';
 import { forceRenderAtom } from '@/hooks/useForceRender';
+import { rootNoteAtom, scaleTypeAtom } from '@/stores/music';
 
 interface Props {
   music: Music;
@@ -24,6 +25,8 @@ export default forwardRef(function Blocks({ music, onScroll }: Props, ref: Forwa
   const barCount = useAtomValue(barCountAtom); // 小節数
   const beatCount = useAtomValue(beatCountAtom); // 拍子
   const minNoteDuration = useAtomValue(minNoteDurationAtom); // 最小音符の長さ
+  const scaleType = useAtomValue(scaleTypeAtom);
+  const rootNote = useAtomValue(rootNoteAtom);
 
   const cols = barCount * beatCount * minNoteDuration;
   const rows = (octaveRange[MAX] - octaveRange[MIN] + 1) * 12;
@@ -64,7 +67,7 @@ export default forwardRef(function Blocks({ music, onScroll }: Props, ref: Forwa
               <Block barIndex={i} key={note.id} note={note} octaveRange={octaveRange} />
             ))}
             {bar.chord
-              ?.getNotes()
+              ?.getNotes(rootNote, scaleType)
               .map((note) => <Block barIndex={i} key={note.id} note={note} octaveRange={octaveRange} />)}
           </div>
         ))}

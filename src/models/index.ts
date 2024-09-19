@@ -1,5 +1,5 @@
 import { BASE_SCALES, MAX, MIN, SCALES } from '@/const';
-import { DiatonicChordType, Scale, Settings } from '@/types';
+import { DiatonicChordType, RootNote, Scale, ScaleType, Settings } from '@/types';
 import { CSSProperties } from 'react';
 
 // IDを持つ基底クラス
@@ -145,12 +145,20 @@ export class DiatonicChord extends Note {
   /**
    * コードのNoteを取得
    */
-  public getNotes(): Note[] {
+  public getNotes(rootNote: RootNote, scaleType: ScaleType): Note[] {
     const intervals = [0, 2, 4];
+    const intervalsByBase = scaleType.intervals.reduce(
+      (acc, cur) => {
+        const prev = acc.at(-1) ?? Note.getScaleIndex(rootNote.scale);
+        return [...acc, prev + cur];
+      },
+      [0],
+    );
+    const pickedNotes = SCALES.filter((_, i) => intervalsByBase.includes(i % SCALES.length));
 
     return intervals.map((interval) => {
-      const scaleIndex = (this.getScaleIndex() + interval) % SCALES.length;
-      const scale = SCALES[scaleIndex];
+      const scaleIndex = (this.getScaleIndex() + interval) % pickedNotes.length;
+      const scale = pickedNotes[scaleIndex];
       const octave = scaleIndex < this.getScaleIndex() ? this.octave + 1 : this.octave;
 
       return new Note({

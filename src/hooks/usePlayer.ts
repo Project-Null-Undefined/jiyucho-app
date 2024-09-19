@@ -1,7 +1,7 @@
 import { Note } from '@/models';
-import { musicAtom } from '@/stores/music';
+import { musicAtom, rootNoteAtom, scaleTypeAtom } from '@/stores/music';
 import { playbackPositionAtom } from '@/stores/playbackPosition';
-import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom } from '@/stores/settings';
+import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom, settingsAtom } from '@/stores/settings';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useCallback, useRef, useState } from 'react';
 import { SplendidGrandPiano } from 'smplr';
@@ -24,11 +24,13 @@ export default function usePlayer() {
   const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
   const playNotesRef = useRef<PlayingNote>({});
   const setPlaybackPosition = useSetAtom(playbackPositionAtom);
+  const rootNote = useAtomValue(rootNoteAtom);
 
   const bpm = useAtomValue(bpnAtom);
   const barCount = useAtomValue(barCountAtom);
   const beatCount = useAtomValue(beatCountAtom);
   const minNoteDuration = useAtomValue(minNoteDurationAtom);
+  const scaleType = useAtomValue(scaleTypeAtom);
 
   const setPlayinterval = useCallback((interval: NodeJS.Timeout | undefined) => {
     playIntervalRef.current = interval;
@@ -56,7 +58,7 @@ export default function usePlayer() {
     if (!bar) return;
 
     const notes = bar.notes.filter((note) => note.start <= playingPos && playingPos < note.end);
-    const chordNotes = bar.chord?.getNotes() ?? [];
+    const chordNotes = bar.chord?.getNotes(rootNote, scaleType) ?? [];
 
     [...notes, ...chordNotes].forEach((note) => {
       // 再生中でないノートのみ再生

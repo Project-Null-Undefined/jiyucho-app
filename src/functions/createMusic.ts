@@ -99,7 +99,7 @@ export function createDiatonicChordCandidates(
 ): DiatonicChord[] {
   const chords = getDiatonicChords(rootNote, scaleType.intervals, barDuration, octaveRange);
   const chordCandidates: DiatonicChord[] = chords.filter((chord) => {
-    const notes = chord.getNotes();
+    const notes = chord.getNotes(rootNote, scaleType);
     return notes.some((note) => note.scale === barFirstNote.scale);
   });
 
