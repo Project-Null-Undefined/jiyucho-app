@@ -1,4 +1,4 @@
-import { SCALES } from '@/const';
+import { MIN, SCALES } from '@/const';
 import { Bar, Beat, DiatonicChord, Music, Note } from '@/models';
 import { Interval, RootNote, ScaleType, Settings } from '@/types';
 
@@ -12,7 +12,7 @@ export function createMusic(
   beats: Beat[],
   settings: Settings,
 ): Music {
-  const { barCount, beatCount, minNoteDuration } = settings;
+  const { barCount, beatCount, minNoteDuration, octaveRange } = settings;
   const initNotes: Note[] = [];
   const notes = beats.reduce((notes, beat) => {
     const { start, duration } = beat;
@@ -36,7 +36,7 @@ export function createMusic(
     const chords =
       firstNote === undefined
         ? []
-        : createDiatonicChordCandidates(rootNote, scaleType, firstNote, beatCount * minNoteDuration);
+        : createDiatonicChordCandidates(rootNote, scaleType, firstNote, beatCount * minNoteDuration, octaveRange);
 
     return new Bar({
       notes: barNotes,
@@ -95,8 +95,9 @@ export function createDiatonicChordCandidates(
   scaleType: ScaleType,
   barFirstNote: Note,
   barDuration: number,
+  octaveRange: Settings['octaveRange'],
 ): DiatonicChord[] {
-  const chords = getDiatonicChords(rootNote, scaleType.intervals, barDuration);
+  const chords = getDiatonicChords(rootNote, scaleType.intervals, barDuration, octaveRange);
   const chordCandidates: DiatonicChord[] = chords.filter((chord) => {
     const notes = chord.getNotes();
     return notes.some((note) => note.scale === barFirstNote.scale);
@@ -108,13 +109,19 @@ export function createDiatonicChordCandidates(
 /**
  * コードを全て生成する
  */
-export function getDiatonicChords(rootNote: RootNote, scale: Interval[], duration: number): DiatonicChord[] {
+export function getDiatonicChords(
+  rootNote: RootNote,
+  scale: Interval[],
+  duration: number,
+  octaveRange: Settings['octaveRange'],
+): DiatonicChord[] {
   const initDiatonicChord: DiatonicChord[] = [];
   const diatonicChord = scale.reduce((notes, interval) => {
-    const prevNote = notes.at(notes.length - 1);
+    const prevNote = notes.at(-1);
 
     if (prevNote === undefined) {
-      return [new DiatonicChord({ octave: rootNote.octave, scale: rootNote.scale, start: 0, duration })];
+      const octave = octaveRange[MIN];
+      return [new DiatonicChord({ octave, scale: rootNote.scale, start: 0, duration })];
     }
 
     const prevScaleIndex = prevNote.getScaleIndex();

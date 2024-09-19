@@ -4,7 +4,7 @@ import { atom } from 'jotai';
 // bpm
 export const bpnAtom = atom<Settings['bpm']>(120);
 // 表示する音階の範囲
-export const octaveRangeAtom = atom<Settings['octaveRange']>([3, 5]);
+export const octaveRangeAtom = atom<Settings['octaveRange']>([2, 5]);
 // 小節数
 export const barCountAtom = atom<Settings['barCount']>(8);
 // 1小節あたりの拍数
