@@ -1,4 +1,4 @@
-import { MAX, MIN, SCALES } from '@/const';
+import { BASE_SCALES, MAX, MIN, SCALES } from '@/const';
 import { DiatonicChordType, Scale, Settings } from '@/types';
 import { CSSProperties } from 'react';
 
@@ -26,6 +26,10 @@ export class Beat extends Identifiable {
 
     this.start = start;
     this.duration = duration;
+  }
+
+  get end(): number {
+    return this.start + this.duration;
   }
 }
 
@@ -90,6 +94,20 @@ export class Note extends Beat {
    */
   public static getScaleIndex(scale: Scale): number {
     return SCALES.indexOf(scale);
+  }
+
+  /**
+   * 音の周波数を取得
+   */
+  public getFrequency(): number {
+    const scaleIndex = this.getScaleIndex();
+
+    const baseFrequency = BASE_SCALES[scaleIndex].frequency;
+
+    const octaveAdjustment = Math.pow(2, this.octave - 4);
+    const frequency = baseFrequency * octaveAdjustment;
+
+    return frequency;
   }
 }
 

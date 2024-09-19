@@ -4,39 +4,39 @@ import { BaseScale, ScaleType } from '@/types';
 export const BASE_SCALES = [
   {
     scale: 'C',
-    frequency: 261.63,
+    frequency: 440.0 * Math.pow(2, -9 / 12),
   },
   {
     scale: 'C#',
-    frequency: 277.18,
+    frequency: 440.0 * Math.pow(2, -8 / 12),
   },
   {
     scale: 'D',
-    frequency: 293.66,
+    frequency: 440.0 * Math.pow(2, -7 / 12),
   },
   {
     scale: 'D#',
-    frequency: 311.13,
+    frequency: 440.0 * Math.pow(2, -6 / 12),
   },
   {
     scale: 'E',
-    frequency: 329.63,
+    frequency: 440.0 * Math.pow(2, -5 / 12),
   },
   {
     scale: 'F',
-    frequency: 349.23,
+    frequency: 440.0 * Math.pow(2, -4 / 12),
   },
   {
     scale: 'F#',
-    frequency: 369.99,
+    frequency: 440.0 * Math.pow(2, -3 / 12),
   },
   {
     scale: 'G',
-    frequency: 392.0,
+    frequency: 440.0 * Math.pow(2, -2 / 12),
   },
   {
     scale: 'G#',
-    frequency: 415.3,
+    frequency: 440.0 * Math.pow(2, -1 / 12),
   },
   {
     scale: 'A',
@@ -44,11 +44,11 @@ export const BASE_SCALES = [
   },
   {
     scale: 'A#',
-    frequency: 466.16,
+    frequency: 440.0 * Math.pow(2, 1 / 12),
   },
   {
     scale: 'B',
-    frequency: 493.88,
+    frequency: 440.0 * Math.pow(2, 2 / 12),
   },
 ] as const satisfies BaseScale[];
 

@@ -1,19 +1,26 @@
+import { Note } from '@/models';
 import { musicAtom } from '@/stores/music';
 import { playbackPositionAtom } from '@/stores/playbackPosition';
 import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom } from '@/stores/settings';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
+
+interface PlayingNote {
+  [key: string]: () => void;
+}
 
 const isPlayingAtom = atom(false);
 
 export default function usePlayer() {
-  const _music = useAtomValue(musicAtom);
+  const music = useAtomValue(musicAtom);
 
+  const [context] = useState<AudioContext>(() => new (window.AudioContext || window.webkitAudioContext)());
   const playbackPositionRef = useRef(0);
   const playIntervalRef = useRef<NodeJS.Timeout>();
   const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
-
+  const playNotesRef = useRef<PlayingNote>({});
   const setPlaybackPosition = useSetAtom(playbackPositionAtom);
+
   const bpm = useAtomValue(bpnAtom);
   const barCount = useAtomValue(barCountAtom);
   const beatCount = useAtomValue(beatCountAtom);
@@ -24,8 +31,11 @@ export default function usePlayer() {
     setIsPlaying(interval !== undefined);
   }, []);
 
-  const _playNote = useCallback((frequency: number, durationSec: number) => {
-    const context = new AudioContext();
+  const playNote = useCallback((note: Note, playingBeat: number) => {
+    console.log(note.getName());
+    const frequency = note.getFrequency();
+    const durationDiff = playingBeat - note.start;
+    const durationSec = (note.duration - durationDiff) * (60 / bpm);
 
     const oscillator = context.createOscillator();
     const gainNode = context.createGain();
@@ -33,7 +43,7 @@ export default function usePlayer() {
     oscillator.connect(gainNode);
     gainNode.connect(context.destination);
 
-    oscillator.type = 'sine';
+    oscillator.type = 'square';
     oscillator.frequency.value = frequency;
 
     oscillator.start();
@@ -43,8 +53,30 @@ export default function usePlayer() {
     gainNode.gain.exponentialRampToValueAtTime(0.001, stopTime);
     oscillator.stop(stopTime);
 
+    setTimeout(() => {
+      delete playNotesRef.current[note.id];
+    }, durationSec * 1000);
+
     const stop = () => oscillator.stop();
     return stop;
+  }, []);
+
+  const playMusic = useCallback((position: number) => {
+    const playingBar = Math.floor(position / (beatCount * minNoteDuration));
+    const playingPos = position - playingBar * beatCount * minNoteDuration;
+
+    const bar = music.bars.at(playingBar);
+    if (!bar) return;
+
+    const notes = bar.notes.filter((note) => note.start <= playingPos && playingPos < note.end);
+    const chordNotes = bar.chord?.getNotes() ?? [];
+
+    [...notes, ...chordNotes].forEach((note) => {
+      // 再生中でないノートのみ再生
+      if (!(note.id in playNotesRef.current)) {
+        playNotesRef.current[note.id] = playNote(note, playingPos);
+      }
+    });
   }, []);
 
   /**
@@ -64,6 +96,7 @@ export default function usePlayer() {
       if (next <= finalBeat) {
         playbackPositionRef.current = next;
         setPlaybackPosition(next);
+        playMusic(next);
       } else {
         clearInterval(interval);
         setPlayinterval(undefined);
@@ -79,6 +112,7 @@ export default function usePlayer() {
   const pause = useCallback(() => {
     clearInterval(playIntervalRef.current);
     setPlayinterval(undefined);
+    for (const stop of Object.values(playNotesRef.current)) stop();
   }, []);
 
   /**
