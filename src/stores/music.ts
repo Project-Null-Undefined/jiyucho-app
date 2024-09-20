@@ -25,14 +25,3 @@ export const rootNoteAtom = atom<RootNote>((get) => {
     scale: SCALES[0], // DEBUG のために固定する
   };
 });
-
-// Music (Read Only)
-export const musicAtom = atom<Music>((get) => {
-  const settings = get(settingsAtom);
-  const intervals = get(intervalsAtom);
-  const beats = get(beatsAtom);
-  const rootNote = get(rootNoteAtom);
-  const scaleType = get(scaleTypeAtom);
-
-  return createMusic(rootNote, scaleType, intervals, beats, settings);
-});

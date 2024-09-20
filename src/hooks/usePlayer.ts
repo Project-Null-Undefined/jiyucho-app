@@ -1,7 +1,8 @@
 'use client';
 
 import { Note } from '@/models';
-import { musicAtom, rootNoteAtom, scaleTypeAtom } from '@/stores/music';
+import { music } from '@/samples';
+import { rootNoteAtom, scaleTypeAtom } from '@/stores/music';
 import { playbackPositionAtom } from '@/stores/playbackPosition';
 import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom } from '@/stores/settings';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -15,8 +16,6 @@ interface PlayingNote {
 const isPlayingAtom = atom(false);
 
 export default function usePlayer() {
-  const music = useAtomValue(musicAtom);
-
   const [context, setContext] = useState<AudioContext | undefined>(
     typeof window !== 'undefined' ? new AudioContext() : undefined,
   );
