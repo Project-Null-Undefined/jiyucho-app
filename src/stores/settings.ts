@@ -2,7 +2,7 @@ import { Settings } from '@/types';
 import { atom } from 'jotai';
 
 // bpm
-export const bpnAtom = atom<Settings['bpm']>(120);
+export const bpnAtom = atom<Settings['bpm']>(240);
 // 表示する音階の範囲
 export const octaveRangeAtom = atom<Settings['octaveRange']>([2, 5]);
 // 小節数

@@ -21,7 +21,8 @@ export const rootNoteAtom = atom<RootNote>((get) => {
 
   return {
     octave: octaveMax - 1,
-    scale: SCALES[Math.floor(SCALES.length * Math.random())],
+    // scale: SCALES[Math.floor(SCALES.length * Math.random())],
+    scale: SCALES[0], // DEBUG のために固定する
   };
 });
 
