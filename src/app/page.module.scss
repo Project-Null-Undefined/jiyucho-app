@@ -1,0 +1,24 @@
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .center {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    a {
+      font-size: 2rem;
+      color: $primary-color;
+      text-align: center;
+      cursor: pointer;
+
+      &:hover {
+        @include hoveredColor($primary-color, $transition-time, color);
+      }
+    }
+  }
+}

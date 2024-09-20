@@ -30,7 +30,7 @@ export default [
       'react-hooks': fixupPluginRules(hooksPlugin),
     },
     rules: {
-      '@next/next/no-img-element': 'error',
+      '@next/next/no-img-element': 'off',
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       'no-console': [
         'error',
