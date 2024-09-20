@@ -17,7 +17,9 @@ const isPlayingAtom = atom(false);
 export default function usePlayer() {
   const music = useAtomValue(musicAtom);
 
-  const [context, setContext] = useState<AudioContext>();
+  const [context, setContext] = useState<AudioContext | undefined>(
+    typeof window !== 'undefined' ? new AudioContext() : undefined,
+  );
   const instrument = context ? new SplendidGrandPiano(context, {}) : null;
 
   const playbackPositionRef = useRef(0);
