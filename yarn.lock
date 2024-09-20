@@ -2215,6 +2215,25 @@
   resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.5.2.tgz#db7257d727c891905947bd1c1a99da20e03c2ebd"
   integrity sha512-YAh82Wh4TIrxYLmfGcixwD18oIjyC1pFQC2Y01F2lzV2HTMiYrI0nze0FD0ocB//CKS/7jIUgae+adPqxK5yCQ==
 
+"@tonaljs/midi@^4.9.0":
+  version "4.10.0"
+  resolved "https://registry.yarnpkg.com/@tonaljs/midi/-/midi-4.10.0.tgz#0916bbb1f194d38dc8d1169b2101f0e5b198f805"
+  integrity sha512-LjwEzcBwJSNMLD+qDwVBWvkmIOAs59TPdlTQlooP3S1Au0jy7T+bZeIbBKtLEcDG14S2zyYZEZ1Mo+cxcumMmg==
+  dependencies:
+    "@tonaljs/pitch-note" "6.0.0"
+
+"@tonaljs/pitch-note@6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@tonaljs/pitch-note/-/pitch-note-6.0.0.tgz#dc12c753042fd62d717a61647417b456481da5ff"
+  integrity sha512-m4Ei7zwSsKwotVfnodA7m1SR7zD5NNIea+V7Mo35EcK32ZJBg+SvxdwgfNNdLO8bkDbVrZIgVYqeP3R3Jq7VFQ==
+  dependencies:
+    "@tonaljs/pitch" "5.0.2"
+
+"@tonaljs/pitch@5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@tonaljs/pitch/-/pitch-5.0.2.tgz#ca2dcd60b99e90536f52293d2491187edfbc9967"
+  integrity sha512-mxaXJPPe+LIJdjzpZEl8I8Wx3dEvlzkBbsr2Ltwc2dTAdnErAZ5R0TxVq2egF27lMvQN2QPQPWI9iDPPdVUmrg==
+
 "@types/aria-query@^5.0.1":
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-5.0.4.tgz#1a31c3d378850d2778dabb6374d036dcba4ba708"
@@ -6513,6 +6532,13 @@ micromatch@^4.0.2, micromatch@^4.0.4:
   dependencies:
     braces "^3.0.3"
     picomatch "^2.3.1"
+
+midi-writer-js@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/midi-writer-js/-/midi-writer-js-3.1.1.tgz#8a53bf762a7ea2a77fd8e693236cafe094f617da"
+  integrity sha512-ruRzUWtmcvD7xQcrKRk9fH+1BELv8x07QJxhpM4PS5n6+MOyPb39ifxTV/oI1hHPgKMSuhnhWw2MaGWUAvH9DA==
+  dependencies:
+    "@tonaljs/midi" "^4.9.0"
 
 miller-rabin@^4.0.0:
   version "4.0.1"
