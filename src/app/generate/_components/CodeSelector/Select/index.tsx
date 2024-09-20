@@ -17,7 +17,7 @@ export default function Select({ bar }: Props) {
 
   return (
     <div className={styles.select_container}>
-      <select className={styles.select} onChange={handleChange}>
+      <select className={styles.select} defaultValue={bar.chordIndex} onChange={handleChange}>
         {bar.chords.map((chord, i) => (
           <option key={chord.id} value={i}>
             {chord.getTypeName()}
