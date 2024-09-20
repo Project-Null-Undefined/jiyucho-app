@@ -4,8 +4,15 @@
 import IonIcon from '@reacticons/ionicons';
 import styles from './index.module.scss';
 import IconButton from '@/components/share/IconButton';
+import { music } from '@/samples';
+import { useAtomValue } from 'jotai';
+import { bpnAtom, minNoteDurationAtom } from '@/stores/settings';
+import { exportMidi } from '@/functions/midi';
 
 export default function Controller() {
+  const bpm = useAtomValue(bpnAtom);
+  const minNoteDuration = useAtomValue(minNoteDurationAtom);
+
   return (
     <section className={styles.controller}>
       <div className={styles.group}>
@@ -37,8 +44,10 @@ export default function Controller() {
       </div>
 
       <div className={styles.group}>
-        <IconButton icon={<IonIcon name="save-outline" size="large" />} onClick={() => console.log('clicked')} />
-        <IconButton icon={<IonIcon name="share-outline" size="large" />} onClick={() => console.log('clicked')} />
+        <IconButton
+          icon={<IonIcon name="share-outline" size="large" />}
+          onClick={() => exportMidi(music, bpm, minNoteDuration)}
+        />
       </div>
     </section>
   );
