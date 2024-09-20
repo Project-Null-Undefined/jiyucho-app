@@ -43,7 +43,12 @@ export default forwardRef(function Blocks({ music, onScroll }: Props, ref: Forwa
   );
 
   return (
-    <section className={styles.blocks} data-rootnote={`${rootNote.scale}${rootNote.octave}`} ref={ref} onScroll={onScroll}>
+    <section
+      className={styles.blocks}
+      data-rootnote={`${rootNote.scale}${rootNote.octave}`}
+      ref={ref}
+      onScroll={onScroll}
+    >
       <div className={styles.innner} style={style}>
         <div className={styles.beat_line_container}>
           {Array.from({ length: barCount * beatCount + 1 }).map((_, i) => (
