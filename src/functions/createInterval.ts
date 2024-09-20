@@ -1,6 +1,7 @@
-import { Interval, ScaleType } from '@/types';
+import { Interval, RootNote, ScaleType } from '@/types';
 import { Coordinate } from '@/types/draw';
 import { SCALES } from '@/const';
+import { Note } from '@/models';
 
 /**
  * 音程を生成する
@@ -12,6 +13,7 @@ export function createInterval(
   curveCoordinates: Coordinate[],
   scaleType: ScaleType,
   totalCellCount: number,
+  rootNote: RootNote,
 ): Interval[] {
   if (curveCoordinates.length === 0) return [];
 
@@ -35,17 +37,19 @@ export function createInterval(
     return Math.floor((yMax - y - yMin) * yRate * SCALES.length);
   });
 
-  const base = norimalizedIntervals.at(0) ?? 0;
+  const rootNoteScaleIndex = Note.getScaleIndex(rootNote.scale);
   const intervals: Interval[] = norimalizedIntervals.map((interval) => {
-    const diff = interval - base;
-
     // スケールタイプに含まれない音程の場合は最も近い音程に修正
-    if (!isInScaleType(diff, base, scaleType)) return diff + 1;
+    if (!isInScaleType(interval, rootNoteScaleIndex, scaleType)) return interval + 1;
 
-    return diff;
+    return interval;
   });
 
-  return intervals;
+  // 全て正になるように調整
+  const min = Math.min(...intervals);
+  // 上げるオクターブ数
+  const octave = Math.floor(min / SCALES.length);
+  return intervals.map((interval) => interval + octave * SCALES.length);
 }
 
 function cubicBezier(t: number, p0: number, p1: number, p2: number, p3: number): number {
@@ -92,14 +96,17 @@ function getBezierY(x: number, left: Coordinate, right: Coordinate): number {
  * @param scaleType
  * @returns
  */
-function isInScaleType(interval: Interval, base: number, scaleType: ScaleType): boolean {
+function isInScaleType(interval_: Interval, base: number, scaleType: ScaleType): boolean {
+  const interval = (interval_ + SCALES.length * 100) % SCALES.length;
+
   const intervalsByBase = scaleType.intervals.reduce(
     (acc, cur) => {
       const prev = acc.at(-1) ?? 0;
-      return [...acc, prev + cur];
+      return [...acc, (prev + cur) % SCALES.length];
     },
-    [0],
+    [base],
   );
+  intervalsByBase.pop();
 
-  return intervalsByBase.includes((interval - base) % SCALES.length);
+  return intervalsByBase.includes(interval);
 }
