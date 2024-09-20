@@ -58,14 +58,8 @@ export function createNotes(rootNote: RootNote, intervals: Interval[], beat: Bea
   return intervals.reduce((notes, interval, i) => {
     const prevNote = notes.at(notes.length - 1);
 
-    const rootScaleIndex = Note.getScaleIndex(rootNote.scale);
-    const scaleIndex =
-      rootScaleIndex + interval > 0
-        ? (rootScaleIndex + interval) % SCALES.length
-        : ((rootScaleIndex + interval) % SCALES.length) + SCALES.length - 1;
-    const scale = SCALES[scaleIndex];
-
-    const octave = rootNote.octave + Math.floor((rootScaleIndex + interval) / SCALES.length);
+    const scale = SCALES[interval % SCALES.length];
+    const octave = rootNote.octave + Math.floor(interval / SCALES.length);
 
     // 前の音符と同じ音なら音を繋げる
     if (prevNote?.scale === scale && prevNote?.octave === octave) {
@@ -98,8 +92,9 @@ export function createDiatonicChordCandidates(
   octaveRange: Settings['octaveRange'],
 ): DiatonicChord[] {
   const chords = getDiatonicChords(rootNote, scaleType.intervals, barDuration, octaveRange);
+
   const chordCandidates: DiatonicChord[] = chords.filter((chord) => {
-    const notes = chord.getNotes();
+    const notes = chord.getNotes(rootNote, scaleType);
     return notes.some((note) => note.scale === barFirstNote.scale);
   });
 
@@ -111,28 +106,16 @@ export function createDiatonicChordCandidates(
  */
 export function getDiatonicChords(
   rootNote: RootNote,
-  scale: Interval[],
+  intervals: Interval[],
   duration: number,
   octaveRange: Settings['octaveRange'],
 ): DiatonicChord[] {
-  const initDiatonicChord: DiatonicChord[] = [];
-  const diatonicChord = scale.reduce((notes, interval) => {
-    const prevNote = notes.at(-1);
+  const rootNoteScaleIndex = Note.getScaleIndex(rootNote.scale);
+  const scales = intervals.map((iv) => SCALES[(iv + rootNoteScaleIndex) % SCALES.length]);
 
-    if (prevNote === undefined) {
-      const octave = octaveRange[MIN];
-      return [new DiatonicChord({ octave, scale: rootNote.scale, start: 0, duration })];
-    }
-
-    const prevScaleIndex = prevNote.getScaleIndex();
-    const scaleIndex = (prevScaleIndex + interval) % SCALES.length;
-    const scale = SCALES[scaleIndex];
-
-    const octave = scaleIndex < prevScaleIndex ? prevNote.octave + 1 : prevNote.octave;
-
-    const chord = new DiatonicChord({ octave, scale, start: 0, duration });
-    return [...notes, chord];
-  }, initDiatonicChord);
+  const diatonicChord = scales.map(
+    (s) => new DiatonicChord({ octave: octaveRange[MIN] + 1, scale: s, start: 0, duration }),
+  );
 
   return diatonicChord;
 }

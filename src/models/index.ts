@@ -1,5 +1,5 @@
-import { MAX, MIN, SCALES } from '@/const';
-import { DiatonicChordType, Scale, Settings } from '@/types';
+import { BASE_SCALES, MAX, MIN, SCALES } from '@/const';
+import { DiatonicChordType, RootNote, Scale, ScaleType, Settings } from '@/types';
 import { CSSProperties } from 'react';
 
 // IDを持つ基底クラス
@@ -11,6 +11,13 @@ class Identifiable {
    */
   get id(): string {
     return this._id;
+  }
+
+  /**
+   * IDを設定
+   */
+  set id(id: string) {
+    this._id = id;
   }
 }
 
@@ -27,6 +34,10 @@ export class Beat extends Identifiable {
     this.start = start;
     this.duration = duration;
   }
+
+  get end(): number {
+    return this.start + this.duration;
+  }
 }
 
 // 1音
@@ -34,13 +45,17 @@ export class Note extends Beat {
   declare octave: number;
   declare scale: Scale;
 
-  constructor(props: { scale: Scale; octave: number; start: number; duration: number }) {
+  constructor(props: { scale: Scale; octave: number; start: number; duration: number; id?: string }) {
     const { scale, octave, start, duration } = props;
 
     super(start, duration);
 
     this.octave = octave;
     this.scale = scale;
+
+    if (props.id) {
+      this.id = props.id;
+    }
   }
 
   /**
@@ -91,6 +106,20 @@ export class Note extends Beat {
   public static getScaleIndex(scale: Scale): number {
     return SCALES.indexOf(scale);
   }
+
+  /**
+   * 音の周波数を取得
+   */
+  public getFrequency(): number {
+    const scaleIndex = this.getScaleIndex();
+
+    const baseFrequency = BASE_SCALES[scaleIndex].frequency;
+
+    const octaveAdjustment = Math.pow(2, this.octave - 4);
+    const frequency = baseFrequency * octaveAdjustment;
+
+    return frequency;
+  }
 }
 
 // コード
@@ -116,21 +145,38 @@ export class DiatonicChord extends Note {
   /**
    * コードのNoteを取得
    */
-  public getNotes(): Note[] {
+  public getNotes(rootNote: RootNote, scaleType: ScaleType): Note[] {
     const intervals = [0, 2, 4];
 
-    return intervals.map((interval) => {
-      const scaleIndex = (this.getScaleIndex() + interval) % SCALES.length;
-      const scale = SCALES[scaleIndex];
-      const octave = scaleIndex < this.getScaleIndex() ? this.octave + 1 : this.octave;
+    const rootNoteScaleIndex = Note.getScaleIndex(rootNote.scale);
+    const canUseScales = scaleType.intervals.map((iv) => SCALES[(iv + rootNoteScaleIndex) % SCALES.length]);
 
-      return new Note({
+    const indexOfCanUseScales = canUseScales.indexOf(this.scale);
+    const scales = intervals.map((iv) => canUseScales[(indexOfCanUseScales + iv) % canUseScales.length]);
+
+    const initNotes: Note[] = [];
+    const notes = scales.reduce((notes, scale, i) => {
+      const newNote = new Note({
         scale,
-        octave,
+        octave: this.octave,
         start: this.start,
         duration: this.duration,
+        id: `${this.id}-${this.octave}-${scale}-${i}`,
       });
-    });
+
+      const prevNote = notes.at(-1);
+      if (!prevNote) return [newNote];
+
+      newNote.octave = prevNote.octave;
+
+      const prevNoteScaleIndex = prevNote.getScaleIndex();
+      const newNoteScaleIndex = newNote.getScaleIndex();
+      if (prevNoteScaleIndex > newNoteScaleIndex) newNote.octave += 1;
+
+      return [...notes, newNote];
+    }, initNotes);
+
+    return notes;
   }
 }
 

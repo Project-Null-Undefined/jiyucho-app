@@ -1,0 +1,9 @@
+.seek_bar {
+  grid-column-start: var(--p);
+  grid-row-start: 1;
+  grid-row-end: -1;
+
+  height: 100%;
+  width: 2px;
+  background-color: $primary-color;
+}

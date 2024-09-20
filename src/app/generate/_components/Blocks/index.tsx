@@ -7,7 +7,10 @@ import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 import Block from './Block';
 import { MAX, MIN } from '@/const';
 import { Music } from '@/models';
+import { playbackPositionAtom } from '@/stores/playbackPosition';
+import SeekBar from './SeekBar';
 import { forceRenderAtom } from '@/hooks/useForceRender';
+import { rootNoteAtom, scaleTypeAtom } from '@/stores/music';
 
 interface Props {
   music: Music;
@@ -15,11 +18,15 @@ interface Props {
 }
 
 export default forwardRef(function Blocks({ music, onScroll }: Props, ref: ForwardedRef<HTMLElement>) {
+  const playbackPosition = useAtomValue(playbackPositionAtom); // 再生位置
+
   useAtomValue(forceRenderAtom);
   const octaveRange = useAtomValue(octaveRangeAtom); // 表示する音域
   const barCount = useAtomValue(barCountAtom); // 小節数
   const beatCount = useAtomValue(beatCountAtom); // 拍子
   const minNoteDuration = useAtomValue(minNoteDurationAtom); // 最小音符の長さ
+  const scaleType = useAtomValue(scaleTypeAtom);
+  const rootNote = useAtomValue(rootNoteAtom);
 
   const cols = barCount * beatCount * minNoteDuration;
   const rows = (octaveRange[MAX] - octaveRange[MIN] + 1) * 12;
@@ -36,7 +43,12 @@ export default forwardRef(function Blocks({ music, onScroll }: Props, ref: Forwa
   );
 
   return (
-    <section className={styles.blocks} ref={ref} onScroll={onScroll}>
+    <section
+      className={styles.blocks}
+      data-rootnote={`${rootNote.scale}${rootNote.octave}`}
+      ref={ref}
+      onScroll={onScroll}
+    >
       <div className={styles.innner} style={style}>
         <div className={styles.beat_line_container}>
           {Array.from({ length: barCount * beatCount + 1 }).map((_, i) => (
@@ -60,10 +72,12 @@ export default forwardRef(function Blocks({ music, onScroll }: Props, ref: Forwa
               <Block barIndex={i} key={note.id} note={note} octaveRange={octaveRange} />
             ))}
             {bar.chord
-              ?.getNotes()
+              ?.getNotes(rootNote, scaleType)
               .map((note) => <Block barIndex={i} key={note.id} note={note} octaveRange={octaveRange} />)}
           </div>
         ))}
+
+        <SeekBar playbackPosition={playbackPosition} />
       </div>
     </section>
   );

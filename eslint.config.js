@@ -51,7 +51,6 @@ export default [
           unnamedComponents: 'arrow-function',
         },
       ],
-      'react/hook-use-state': 'error',
       'react/iframe-missing-sandbox': 'error',
       'react/jsx-child-element-spacing': 'error',
       'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
