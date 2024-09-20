@@ -147,28 +147,36 @@ export class DiatonicChord extends Note {
    */
   public getNotes(rootNote: RootNote, scaleType: ScaleType): Note[] {
     const intervals = [0, 2, 4];
-    const intervalsByBase = scaleType.intervals.reduce(
-      (acc, cur) => {
-        const prev = acc.at(-1) ?? Note.getScaleIndex(rootNote.scale);
-        return [...acc, prev + cur];
-      },
-      [0],
-    );
-    const pickedNotes = SCALES.filter((_, i) => intervalsByBase.includes(i % SCALES.length));
 
-    return intervals.map((interval) => {
-      const scaleIndex = (this.getScaleIndex() + interval) % pickedNotes.length;
-      const scale = pickedNotes[scaleIndex];
-      const octave = scaleIndex < this.getScaleIndex() ? this.octave + 1 : this.octave;
+    const rootNoteScaleIndex = Note.getScaleIndex(rootNote.scale);
+    const canUseScales = scaleType.intervals.map((iv) => SCALES[(iv + rootNoteScaleIndex) % SCALES.length]);
 
-      return new Note({
+    const indexOfCanUseScales = canUseScales.indexOf(this.scale);
+    const scales = intervals.map((iv) => canUseScales[(indexOfCanUseScales + iv) % canUseScales.length]);
+
+    const initNotes: Note[] = [];
+    const notes = scales.reduce((notes, scale, i) => {
+      const newNote = new Note({
         scale,
-        octave,
+        octave: this.octave,
         start: this.start,
         duration: this.duration,
-        id: `${this.id}-${this.octave}-${scaleIndex}`,
+        id: `${this.id}-${this.octave}-${scale}-${i}`,
       });
-    });
+
+      const prevNote = notes.at(-1);
+      if (!prevNote) return [newNote];
+
+      newNote.octave = prevNote.octave;
+
+      const prevNoteScaleIndex = prevNote.getScaleIndex();
+      const newNoteScaleIndex = newNote.getScaleIndex();
+      if (prevNoteScaleIndex > newNoteScaleIndex) newNote.octave += 1;
+
+      return [...notes, newNote];
+    }, initNotes);
+
+    return notes;
   }
 }
 

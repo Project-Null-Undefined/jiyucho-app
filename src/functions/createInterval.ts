@@ -48,7 +48,7 @@ export function createInterval(
   // 全て正になるように調整
   const min = Math.min(...intervals);
   // 上げるオクターブ数
-  const octave = Math.floor(min / SCALES.length);
+  const octave = -Math.floor(min / SCALES.length);
   return intervals.map((interval) => interval + octave * SCALES.length);
 }
 
@@ -98,15 +98,5 @@ function getBezierY(x: number, left: Coordinate, right: Coordinate): number {
  */
 function isInScaleType(interval_: Interval, base: number, scaleType: ScaleType): boolean {
   const interval = (interval_ + SCALES.length * 100) % SCALES.length;
-
-  const intervalsByBase = scaleType.intervals.reduce(
-    (acc, cur) => {
-      const prev = acc.at(-1) ?? 0;
-      return [...acc, (prev + cur) % SCALES.length];
-    },
-    [base],
-  );
-  intervalsByBase.pop();
-
-  return intervalsByBase.includes(interval);
+  return scaleType.intervals.includes(interval);
 }

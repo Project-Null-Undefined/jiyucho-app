@@ -64,14 +64,14 @@ export const { MIN, MAX } = Range;
 export const SCALE_TYPES = [
   {
     type: 'major',
-    intervals: [2, 2, 1, 2, 2, 2, 1],
+    intervals: [0, 2, 4, 5, 7, 9, 11],
   },
   {
     type: 'minor',
-    intervals: [2, 1, 2, 2, 1, 2, 2],
+    intervals: [0, 2, 3, 5, 7, 8, 10],
   },
   {
     type: 'diminished',
-    intervals: [2, 1, 2, 1, 2, 1, 2],
+    intervals: [0, 2, 3, 5, 6, 8, 9, 11],
   },
 ] as const satisfies ScaleType[];
