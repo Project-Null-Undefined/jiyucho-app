@@ -1,11 +1,12 @@
+'use client';
+
 import { Note } from '@/models';
 import { musicAtom, rootNoteAtom, scaleTypeAtom } from '@/stores/music';
 import { playbackPositionAtom } from '@/stores/playbackPosition';
 import { barCountAtom, beatCountAtom, bpnAtom, minNoteDurationAtom } from '@/stores/settings';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SplendidGrandPiano } from 'smplr';
-import { AudioContext as StandardizedAudioContext } from 'standardized-audio-context';
 
 interface PlayingNote {
   [key: string]: () => void;
@@ -16,8 +17,8 @@ const isPlayingAtom = atom(false);
 export default function usePlayer() {
   const music = useAtomValue(musicAtom);
 
-  const [context] = useState<AudioContext>(() => new StandardizedAudioContext() as unknown as AudioContext);
-  const instrument = new SplendidGrandPiano(context, {});
+  const [context, setContext] = useState<AudioContext>();
+  const instrument = context ? new SplendidGrandPiano(context, {}) : null;
 
   const playbackPositionRef = useRef(0);
   const playIntervalRef = useRef<NodeJS.Timeout>();
@@ -32,6 +33,10 @@ export default function usePlayer() {
   const minNoteDuration = useAtomValue(minNoteDurationAtom);
   const scaleType = useAtomValue(scaleTypeAtom);
 
+  useEffect(() => {
+    if (!context) setContext(new AudioContext());
+  }, [context]);
+
   const setPlayinterval = useCallback((interval: NodeJS.Timeout | undefined) => {
     playIntervalRef.current = interval;
     setIsPlaying(interval !== undefined);
@@ -41,7 +46,7 @@ export default function usePlayer() {
     const durationDiff = playingBeat - note.start;
     const durationSec = (note.duration - durationDiff) * (60 / bpm);
 
-    instrument.start({ note: note.getName(), velocity: 80, time: 0, duration: durationSec });
+    instrument?.start({ note: note.getName(), velocity: 80, time: 0, duration: durationSec });
 
     setTimeout(() => {
       delete playNotesRef.current[note.id];
