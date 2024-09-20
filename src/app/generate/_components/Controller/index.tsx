@@ -4,15 +4,16 @@
 import IonIcon from '@reacticons/ionicons';
 import styles from './index.module.scss';
 import IconButton from '@/components/share/IconButton';
-import { music } from '@/samples';
 import { useAtomValue } from 'jotai';
 import { bpnAtom, minNoteDurationAtom } from '@/stores/settings';
 import { exportMidi } from '@/functions/midi';
 import usePlayer from '@/hooks/usePlayer';
+import { musicAtom } from '@/stores/music';
 
 export default function Controller() {
   const { isPlaying, play, pause, nextBar, prevBar, rewind, forward } = usePlayer();
 
+  const music = useAtomValue(musicAtom);
   const bpm = useAtomValue(bpnAtom);
   const minNoteDuration = useAtomValue(minNoteDurationAtom);
 
