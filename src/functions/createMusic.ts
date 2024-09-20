@@ -114,7 +114,7 @@ export function getDiatonicChords(
   const scales = intervals.map((iv) => SCALES[(iv + rootNoteScaleIndex) % SCALES.length]);
 
   const diatonicChord = scales.map(
-    (s) => new DiatonicChord({ octave: octaveRange[MIN], scale: s, start: 0, duration }),
+    (s) => new DiatonicChord({ octave: octaveRange[MIN] + 1, scale: s, start: 0, duration }),
   );
 
   return diatonicChord;
